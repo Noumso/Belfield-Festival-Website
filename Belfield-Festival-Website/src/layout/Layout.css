@@ -38,13 +38,13 @@
 .main-content {
   flex: 1;
   padding: 2rem;
-  background-color: #f8f7f7;
+  background-color: #f9f9f9;
 }
 
 .footer {
   text-align: center;
   padding: 1rem;
   background-color: #222;
-  color: #000000;
+  color: #ccc;
   font-size: 0.875rem;
 }
