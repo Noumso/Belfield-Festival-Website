@@ -1,12 +1,13 @@
-import { Outlet, Link } from "react-router-dom";
-import "./Layout.css";
+import { Link, Outlet } from 'react-router-dom';
+import './Layout.css';
 
 function Layout() {
   return (
-    <>
+    <div className="layout-container">
       <header>
         <nav className="navbar">
-          <ul>
+          <h1 className="logo">Belfield Festival</h1>
+          <ul className="nav-links">
             <li><Link to="/">Home</Link></li>
             <li><Link to="/schedule">Schedule</Link></li>
             <li><Link to="/info">Info</Link></li>
@@ -15,14 +16,14 @@ function Layout() {
         </nav>
       </header>
 
-      <main className="content">
+      <main className="main-content">
         <Outlet />
       </main>
 
-      <footer>
-        <p>Belfield Festival © {new Date().getFullYear()}</p>
+      <footer className="footer">
+        <p>&copy; {new Date().getFullYear()} Belfield Festival. All rights reserved.</p>
       </footer>
-    </>
+    </div>
   );
 }
 
