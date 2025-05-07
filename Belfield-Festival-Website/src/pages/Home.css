@@ -39,6 +39,7 @@
   }
   
   .highlights h2 {
+    color: #4CAF50;
     font-size: 1.8rem;
     margin-bottom: 1rem;
   }
@@ -49,6 +50,7 @@
   }
   
   .highlights li {
+    color: #333;
     margin: 0.5rem 0;
     font-size: 1.1rem;
   }  
