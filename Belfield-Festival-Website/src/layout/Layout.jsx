@@ -1,12 +1,11 @@
-import { Link } from "react-router-dom";
-import './Layout.css';
+import { Outlet, Link } from "react-router-dom";
+import "./Layout.css";
 
-export default function Layout({ children }) {
+function Layout() {
   return (
-    <div>
+    <>
       <header>
         <nav className="navbar">
-          <h1>Belfield Festival</h1>
           <ul>
             <li><Link to="/">Home</Link></li>
             <li><Link to="/schedule">Schedule</Link></li>
@@ -15,10 +14,16 @@ export default function Layout({ children }) {
           </ul>
         </nav>
       </header>
-      <main>{children}</main>
+
+      <main className="content">
+        <Outlet />
+      </main>
+
       <footer>
-        <p>&copy; 2025 Belfield Festival Association</p>
+        <p>Belfield Festival © {new Date().getFullYear()}</p>
       </footer>
-    </div>
+    </>
   );
 }
+
+export default Layout;
