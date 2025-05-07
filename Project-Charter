@@ -10,7 +10,9 @@ The Belfield Festival Website project aims to provide a professional, responsive
 **SMART Objectives:**
 1. Deliver a responsive and user-friendly website showcasing festival details, schedule, and media content by the end of Stage 4.
 2. Integrate an admin dashboard allowing content updates (text, images, events) without developer intervention.
-3. Enable easy access to the ticketing platform and practical information (location, transport) to reduce information requests by 50%.
+- 3. Enable easy access to the ticketing platform and practical information (location, transport) to reduce information requests by 50%.
++ 3. Provide a built-in ticketing system that allows users to create an account, log in, and purchase tickets securely.
++ 4. Provide practical information (location, transport) to reduce common user inquiries by 50%.
 
 ---
 
@@ -40,13 +42,15 @@ The Belfield Festival Website project aims to provide a professional, responsive
 - Practical information section (location, transport, FAQ)
 - Admin dashboard for content management
 - Integration with Shotgun ticketing platform
+- Built-in ticketing system with user authentication (account creation/login)
+- Optional integration with Shotgun if required
 
 **Out-of-Scope:**
 - Native mobile app development
 - Multilingual support
 - Full-scale e-commerce platform
 - Real-time chat or live streaming features
-
+- External payment gateway development (Stripe/PayPal SDKs will be used instead)
 ---
 
 ## ⚠️ Risks and Mitigation Strategies
@@ -57,6 +61,7 @@ The Belfield Festival Website project aims to provide a professional, responsive
 | Limited time for solo development                 | Prioritize MVP features, avoid overengineering                       |
 | Lack of backend deployment experience             | Use Firebase or Render for simpler deployment solutions              |
 | Bugs or regressions in admin dashboard            | Write tests and perform frequent manual QA during development        |
+| Security vulnerabilities in account/login system  | Use Firebase Auth or Auth0, avoid storing passwords manually         |
 
 ---
 
