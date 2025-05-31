@@ -131,13 +131,6 @@ ___
 
 1. Ticket Purchase Flow
 
-```plaintext
-User -> Front-End: Click "Buy Ticket"
-Front-End -> Back-End: POST /api/tickets {userId, ticketType}
-Back-End -> Database: Save ticket record
-Back-End -> Front-End: Return success + ticket details
-Front-End -> User: Show confirmation and ticket QR code
-```
 2. User Login Flow
 
 ```plaintext
