@@ -162,19 +162,19 @@ Front-End -> Admin: Show confirmation
 
 ### External APIs
 
-- **Shotgun API (optionnel)** : Utilisée pour l'intégration avec une plateforme de billetterie professionnelle, permettant des ventes de billets sécurisées et une validation efficace.
+- **Shotgun API (optional)**: Used for integration with a professional ticketing platform, enabling secure ticket sales and efficient validation.
 
 ### Internal API Endpoints
 
-| Endpoint         | Method | Description                         | Input                        | Output             |
-|------------------|--------|-------------------------------------|-------------------------------|---------------------|
-| `/api/login`     | POST   | Authenticate user                   | `{ email, password }`         | `{ token }`         |
-| `/api/logout`    | POST   | Invalidate user session             | `{ token }`                   | `{ success: true }` |
+| Endpoint         | Method | Description                         | Input                        | Output               |
+|------------------|--------|-------------------------------------|-------------------------------|-----------------------|
+| `/api/login`     | POST   | Authenticate user                   | `{ email, password }`         | `{ token }`           |
+| `/api/logout`    | POST   | Invalidate user session             | `{ token }`                   | `{ success: true }`   |
 | `/api/artists`   | GET    | Get all artists                     | None                          | `[ { artist }, ... ]` |
-| `/api/artists`   | POST   | Add new artist (admin only)         | `{ name, genre, day, stage }` | `{ artist }`        |
+| `/api/artists`   | POST   | Add new artist (admin only)         | `{ name, genre, day, stage }` | `{ artist }`          |
 | `/api/schedule`  | GET    | Get event schedule                  | Optional filters              | `[ { artist }, ... ]` |
-| `/api/tickets`   | POST   | Purchase ticket                     | `{ userId, type }`            | `{ ticket }`        |
-| `/api/users`     | GET    | Get user info (admin only)          | Query params                  | `[ { user }, ... ]` |
+| `/api/tickets`   | POST   | Purchase ticket                     | `{ userId, type }`            | `{ ticket }`          |
+| `/api/users`     | GET    | Get user info (admin only)          | Query params                  | `[ { user }, ... ]`   |
 
 ---
 
@@ -182,36 +182,36 @@ Front-End -> Admin: Show confirmation
 
 ### SCM Strategy
 
-- Dépôt hébergé sur **GitHub**.
-- Branches :
-  - `main` pour le code en production.
-  - `dev` pour l'intégration des fonctionnalités et les tests.
-  - `feature/*` pour les tâches ou fonctionnalités individuelles.
-- Utiliser des **Pull Requests (PR)** pour les revues de code et l'intégration.
-- Enforcer des messages de commit descriptifs et des commits fréquents.
-- Protéger la branche `main` avec des revues de PR obligatoires.
+- Repository hosted on **GitHub**.
+- Branches:
+  - `main` for production code.
+  - `dev` for feature integration and testing.
+  - `feature/*` branches for individual tasks/features.
+- Use **Pull Requests (PRs)** for code review and integration.
+- Enforce descriptive commit messages and frequent commits.
+- Protect the `main` branch with mandatory PR reviews.
 
 ### QA Strategy
 
-- **Tests unitaires** avec Jest pour les composants React et la logique backend.
-- **Tests d'API** avec Supertest.
-- **Tests manuels** des flux utilisateurs clés : connexion, achat de billet, mises à jour admin.
-- **GitHub Actions** pour l'intégration continue (CI), exécutant les tests sur les PR.
-- **Environnement de staging** pour les tests d'acceptation avant la mise en production.
+- **Unit testing** with Jest for React components and backend logic.
+- **API endpoint testing** with Supertest.
+- **Manual testing** of key user flows: login, ticket purchase, admin updates.
+- **GitHub Actions** for Continuous Integration (CI) to run tests on PRs.
+- **Staging environment** deployed for acceptance testing before production release.
 
 ---
 
 ## 7. Technical Justifications
 
-- **React.js** choisi pour son architecture orientée composants, sa réactivité, et sa large communauté.
-- **Node.js avec Express** pour un backend API évolutif et flexible.
-- **MongoDB Atlas** pour un design de schéma flexible, utile pour les données artistes et billets.
-- **Authentification JWT** pour une gestion des sessions sécurisée et sans état.
-- **Déploiement** via Vercel (frontend) et Render ou Railway (backend) pour simplifier l'hébergement et le CI/CD.
-- **Intégration avec l'API Shotgun** pour profiter d’un service de billetterie éprouvé, réduisant la complexité du développement.
+- **React.js** chosen for its component-driven architecture, responsiveness, and large community support.
+- **Node.js with Express** provides a scalable, flexible backend API.
+- **MongoDB Atlas** offers a flexible schema design, ideal for artist and ticket data.
+- **JWT Authentication** enables secure, stateless session management.
+- **Deployment** via Vercel (frontend) and Render or Railway (backend) simplifies hosting and CI/CD.
+- **Integration with the Shotgun API** leverages an established ticketing service, reducing development complexity.
 
 ---
 
 **Conclusion**  
-This concludes the technical documentation blueprint for the Belfield Festival Website MVP.
-It provides a clear roadmap for development, testing, and deployment, aligned with the project goals.
+This document concludes the technical blueprint for the **Belfield Festival Website MVP**.  
+It provides a clear roadmap for development, testing, and deployment, aligned with the project's goals.
