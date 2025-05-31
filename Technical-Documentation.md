@@ -89,7 +89,7 @@ ___
 Database Collections (MongoDB)
 
 - users
-
+```json
 {
   "_id": "ObjectId",
   "email": "user@example.com",
@@ -98,9 +98,9 @@ Database Collections (MongoDB)
   "createdAt": "ISODate",
   "tickets": ["ticketId1", "ticketId2"]
 }
-
+```
 - artists
-
+```json
 {
   "_id": "ObjectId",
   "name": "Artist Name",
@@ -111,9 +111,9 @@ Database Collections (MongoDB)
   "stage": "Main Stage",
   "time": "22:00"
 }
-
+```
 - tickets
-
+```json
 {
   "_id": "ObjectId",
   "userId": "ObjectId",
@@ -122,7 +122,7 @@ Database Collections (MongoDB)
   "purchaseDate": "ISODate",
   "qrCode": "string"  // encoded ticket info for validation
 }
-
+```
 ___
 
 
