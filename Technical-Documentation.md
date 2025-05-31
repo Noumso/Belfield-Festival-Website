@@ -134,7 +134,7 @@ ___
 
 2. User Login Flow
 
-<img src="https://raw.githubusercontent.com/Noumso/Belfield-Festival-Website/main/Diagram/UserDiagram.svg" alt="User Diagram" width="600" />
+<img src="https://raw.githubusercontent.com/Noumso/Belfield-Festival-Website/main/Diagram/UsersDiagram.svg" alt="Users Diagram" width="600" />
 
 3. Admin Adds Artist
 
