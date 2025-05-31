@@ -130,25 +130,15 @@ ___
 ## 4. High-Level Sequence Diagrams
 
 1. Ticket Purchase Flow
+<img src="https://raw.githubusercontent.com/Noumso/Belfield-Festival-Website/main/Diagram/TickectDiagram.svg" alt="Ticket Diagram" width="600" />
 
 2. User Login Flow
 
-```plaintext
-User -> Front-End: Submit login form
-Front-End -> Back-End: POST /api/login {email, password}
-Back-End -> Database: Verify credentials
-Back-End -> Front-End: Return JWT token
-Front-End -> User: Store token, redirect to dashboard
-```
+<img src="https://raw.githubusercontent.com/Noumso/Belfield-Festival-Website/main/Diagram/UserDiagram.svg" alt="User Diagram" width="600" />
+
 3. Admin Adds Artist
 
-```plaintext
-Admin -> Front-End: Submit artist form
-Front-End -> Back-End: POST /api/artists {artistData}
-Back-End -> Database: Save artist
-Back-End -> Front-End: Return success message
-Front-End -> Admin: Show confirmation
-```
+<img src="https://raw.githubusercontent.com/Noumso/Belfield-Festival-Website/main/Diagram/AdminDiagram.svg" alt="Admin Diagram" width="600" />
 
 ---
 
