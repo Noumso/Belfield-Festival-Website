@@ -1,0 +1,17 @@
+.artist-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 200px;
+    overflow: hidden;
+    text-align: center;
+  }
+  
+  .artist-image {
+    width: 100%;
+    height: auto;
+  }
+  
+  .artist-info {
+    padding: 10px;
+  }
+  

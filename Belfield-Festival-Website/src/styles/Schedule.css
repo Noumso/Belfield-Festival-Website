@@ -1,0 +1,10 @@
+.schedule-container {
+    padding: 20px;
+  }
+  
+  .artist-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  

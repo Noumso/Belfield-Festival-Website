@@ -1,22 +1,13 @@
-import './Home.css';
+import React from 'react';
+import '../styles/Home.css';
 
 function Home() {
   return (
-    <div className="home">
+    <div className="home-container">
       <section className="hero">
-        <h1>Bienvenue au Belfield Festival 🎉</h1>
-        <p>Musique, culture et communauté — le tout en un seul endroit à Paris !</p>
-        <button onClick={() => alert('La billetterie arrive bientôt !')}>Accéder à la billetterie</button>
-      </section>
-
-      <section className="highlights">
-        <h2>Ce qui vous attend</h2>
-        <ul>
-          <li>🎵 Concerts live avec des artistes locaux et internationaux</li>
-          <li>🍔 Food trucks & village associatif</li>
-          <li>📍 Accessible en transport en commun</li>
-          <li>🎫 Achetez vos billets directement en ligne</li>
-        </ul>
+        <h1>Belfield Festival 2025</h1>
+        <p>Rejoignez-nous pour une expérience musicale inoubliable !</p>
+        <a href="/schedule" className="cta-button">Voir la programmation</a>
       </section>
     </div>
   );
