@@ -40,20 +40,3 @@
 .read-the-docs {
   color: #888;
 }
-
-.nav {
-  list-style: none;
-  display: flex;
-  gap: 20px;
-  padding: 10px;
-}
-
-.nav a {
-  text-decoration: none;
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-.nav a:hover {
-  color: #42b983;
-}
