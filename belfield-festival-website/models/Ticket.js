@@ -1,10 +1,13 @@
 import mongoose from 'mongoose';
 
 const ticketSchema = new mongoose.Schema({
-  type: { type: String, required: true }, // ex: "VIP", "Standard"
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  type: { type: String, required: true },
   price: { type: Number, required: true },
-  quantityAvailable: { type: Number, required: true },
-  description: String,
-}, { timestamps: true });
+  purchaseDate: { type: Date, default: Date.now },
+  qrCode: { type: String } // optionnel, pour le QR code de validation
+});
 
-export default mongoose.model('Ticket', ticketSchema);
+const Ticket = mongoose.model('Ticket', ticketSchema);
+
+export default Ticket;
