@@ -1,29 +1,54 @@
 import express from 'express';
 import Artist from '../models/Artist.js';
-import { authenticateToken } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
-
-router.post('/', authenticateToken, async (req, res) => {
-  if (req.user.role !== 'admin') return res.status(403).json({ message: 'Accès refusé' });
-});
 
 router.get('/', async (req, res) => {
   try {
     const artists = await Artist.find();
     res.json(artists);
-  } catch (error) {
-    res.status(500).json({ message: 'Erreur serveur', error });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 });
 
 router.post('/', async (req, res) => {
+  const artist = new Artist(req.body);
   try {
-    const newArtist = new Artist(req.body);
-    await newArtist.save();
+    const newArtist = await artist.save();
     res.status(201).json(newArtist);
-  } catch (error) {
-    res.status(400).json({ message: 'Erreur lors de la création', error });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+router.get('/:id', async (req, res) => {
+  try {
+    const artist = await Artist.findById(req.params.id);
+    if (!artist) return res.status(404).json({ message: 'Artist not found' });
+    res.json(artist);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+router.patch('/:id', async (req, res) => {
+  try {
+    const artist = await Artist.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!artist) return res.status(404).json({ message: 'Artist not found' });
+    res.json(artist);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+router.delete('/:id', async (req, res) => {
+  try {
+    const artist = await Artist.findByIdAndDelete(req.params.id);
+    if (!artist) return res.status(404).json({ message: 'Artist not found' });
+    res.json({ message: 'Artist deleted' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 });
 

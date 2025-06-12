@@ -1,11 +1,12 @@
 import mongoose from 'mongoose';
 
 const eventSchema = new mongoose.Schema({
-  title: String,
+  title: { type: String, required: true },
+  date: { type: Date, required: true },
+  stage: { type: String, required: true },
+  artist: { type: String, required: true },
   description: String,
-  stage: String,
-  date: String,
-  time: String,
+  image: String,
 });
 
 const Event = mongoose.model('Event', eventSchema);

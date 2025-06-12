@@ -1,10 +1,11 @@
 import mongoose from 'mongoose';
 
 const mediaSchema = new mongoose.Schema({
-  type: { type: String, enum: ['image', 'video'] },
-  url: String,
-  caption: String,
-});
+  title: String,
+  type: { type: String, enum: ['image', 'video', 'audio'], required: true },
+  url: { type: String, required: true },
+  description: String,
+  artist: { type: mongoose.Schema.Types.ObjectId, ref: 'Artist' },
+}, { timestamps: true });
 
-const Media = mongoose.model('Media', mediaSchema);
-export default Media;
+export default mongoose.model('Media', mediaSchema);
