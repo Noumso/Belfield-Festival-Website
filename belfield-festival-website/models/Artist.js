@@ -1,12 +1,16 @@
 import mongoose from 'mongoose';
 
 const artistSchema = new mongoose.Schema({
-  name: String,
+  name: { type: String, required: true },
   bio: String,
-  stage: String,
-  time: String,
-  image: String, // URL
-});
+  genre: String,
+  photoUrl: String,
+  socialLinks: {
+    facebook: String,
+    twitter: String,
+    instagram: String,
+    youtube: String,
+  },
+}, { timestamps: true });
 
-const Artist = mongoose.model('Artist', artistSchema);
-export default Artist;
+export default mongoose.model('Artist', artistSchema);

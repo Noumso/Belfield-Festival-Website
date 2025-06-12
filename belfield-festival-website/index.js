@@ -11,6 +11,7 @@ import userRoutes from './routes/users.js';
 import ticketRoutes from './routes/tickets.js';
 import authRoutes from './routes/auth.js';
 import dotenv from 'dotenv';
+
 dotenv.config();
 
 const app = express();
