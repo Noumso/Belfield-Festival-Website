@@ -1,39 +1,43 @@
 import express from 'express';
-import { connectDB } from './db.js';
-import indexRouter from './routes/index.js';
-import artistsRouter from './routes/artists.js';
-import scheduleRouter from './routes/schedule.js';
-import ticketsRouter from './routes/tickets.js';
-import usersRouter from './routes/users.js';
-import adminRouter from './routes/admin.js';
-import artistRoutes from './routes/artists.js';
-import userRoutes from './routes/users.js';
-import ticketRoutes from './routes/tickets.js';
-import authRoutes from './routes/auth.js';
 import dotenv from 'dotenv';
+import cors from 'cors';
+import connectDB from './db.js';
+
+// Routes
+import authRoutes from './routes/auth.js';
+import artistsRoutes from './routes/artists.js';
+import eventsRoutes from './routes/events.js';
+import infoRoutes from './routes/info.js';
+import mediaRoutes from './routes/media.js';
+import scheduleRoutes from './routes/schedule.js';
+import ticketsRoutes from './routes/tickets.js';
+import usersRoutes from './routes/users.js';
+
+// Load environment variables from .env file
+import process from 'process';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+connectDB();
 
+app.use(cors());
 app.use(express.json());
 
-await connectDB();
-
 // Routes publiques
-app.use('/', indexRouter);
-app.use('/artists', artistsRouter);
-app.use('/schedule', scheduleRouter);
-app.use('/tickets', ticketsRouter);
-app.use('/users', usersRouter);
-app.use('/api/artists', artistRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/tickets', ticketRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/artists', artistsRoutes);
+app.use('/api/events', eventsRoutes);
+app.use('/api/info', infoRoutes);
+app.use('/api/media', mediaRoutes);
+app.use('/api/schedule', scheduleRoutes);
+app.use('/api/tickets', ticketsRoutes);
+app.use('/api/users', usersRoutes);
 
-// Route admin
-app.use('/admin', adminRouter);
 
-app.listen(PORT, () => {
-  console.log(`Serveur lancé sur http://localhost:${PORT}`);
+// Route racine simple test
+app.get('/', (req, res) => {
+  res.send('Bienvenue sur le site Belfield Festival API!');
 });
+// Ensure process.env is defined and PORT is set
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

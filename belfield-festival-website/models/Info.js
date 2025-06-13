@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 
 const infoSchema = new mongoose.Schema({
-  section: String,     // ex: 'transport', 'accommodation'
+  title: String,
   content: String,
-});
+  category: String, // ex: "general", "faq", "rules"
+}, { timestamps: true });
 
-const Info = mongoose.model('Info', infoSchema);
-export default Info;
+export default mongoose.model('Info', infoSchema);
