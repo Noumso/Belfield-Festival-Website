@@ -10,6 +10,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Artists from './pages/Artists';
 import AddArtist from './pages/AddArtist';
+import Events from './pages/Events';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/artists" element={<Artists />} />
         <Route path="/add-artist" element={<AddArtist />} />
+        <Route path="/events" element={<Events />} />
         <Route
           path="/dashboard"
           element={

@@ -10,6 +10,7 @@ const artistSchema = new mongoose.Schema({
     twitter: String,
     instagram: String,
     youtube: String,
+    soundcloud: String,
   },
 }, { timestamps: true });
 
