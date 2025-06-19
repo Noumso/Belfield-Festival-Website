@@ -15,6 +15,7 @@ function Navbar() {
       <Link to="/gallery">Galerie</Link> |{' '}
       <Link to="/artists">Artistes</Link> |{' '}
       <Link to="/info">Infos</Link> |{' '}
+      <Link to="/add-artist">Ajouter un artiste</Link> |{' '}
       {!token ? (
         <Link to="/login">Admin</Link>
       ) : (
