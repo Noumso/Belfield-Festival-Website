@@ -1,41 +1,44 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-function Artists() {
+const Artists = () => {
   const [artists, setArtists] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios.get('/api/artists')
-      .then(response => {
-        setArtists(response.data);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error('Erreur lors de la récupération des artistes:', error);
-        setLoading(false);
-      });
+      .then(res => setArtists(res.data))
+      .catch(err => console.error('Erreur chargement artistes :', err));
   }, []);
 
-  if (loading) return <p>Chargement en cours...</p>;
-
   return (
-    <div>
-      <h2>🎤 Liste des Artistes</h2>
+    <div style={{ padding: '2rem' }}>
+      <h2>🎤 Artistes</h2>
       {artists.length === 0 ? (
-        <p>Aucun artiste pour le moment.</p>
+        <p>Aucun artiste disponible.</p>
       ) : (
-        <ul>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
           {artists.map(artist => (
-            <li key={artist._id}>
+            <div key={artist._id} style={{
+              border: '1px solid #ccc',
+              borderRadius: '8px',
+              width: '200px',
+              padding: '1rem',
+              boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
+            }}>
+              <img
+                src={artist.image || 'https://via.placeholder.com/200'}
+                alt={artist.name}
+                style={{ width: '100%', borderRadius: '8px' }}
+              />
               <h3>{artist.name}</h3>
+              <p><em>{artist.genre}</em></p>
               <p>{artist.description}</p>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
-}
+};
 
 export default Artists;

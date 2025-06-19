@@ -36,7 +36,7 @@ app.use('/api/users', usersRoutes);
 
 // Route racine simple test
 app.get('/', (req, res) => {
-  res.send('Bienvenue sur le site Belfield Festival API!');
+  res.send('Bienvenue sur le site Belfield Festival !');
 });
 // Ensure process.env is defined and PORT is set
 const PORT = process.env.PORT || 5000;
