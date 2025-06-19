@@ -2,10 +2,10 @@ import React from 'react';
 
 function Dashboard() {
   return (
-    <main>
-      <h1>Dashboard Administrateur</h1>
-      <p>Gérez les artistes, les horaires, les photos, etc.</p>
-    </main>
+    <div>
+      <h2>Tableau de bord admin</h2>
+      <p>Accédez aux sections : artistes, média, infos, programmation…</p>
+    </div>
   );
 }
 

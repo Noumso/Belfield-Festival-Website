@@ -1,36 +1,42 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Connexion envoyée', { email, password });
-    // Appel API vers le backend ici (axios)
+    try {
+      const res = await axios.post('/api/auth/login', { username: email, password });
+      localStorage.setItem('token', res.data.token);
+      window.location = '/dashboard';
+    } catch (err) {
+      setError(err.response?.data?.message || 'Erreur de connexion');
+    }
   };
 
   return (
-    <main>
-      <h1>Connexion Admin</h1>
+    <div>
+      <h2>Connexion Admin</h2>
       <form onSubmit={handleSubmit}>
         <input
-          type="email"
-          placeholder="Email"
+          type="text"
+          placeholder="Email ou username"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          required
         /><br />
         <input
           type="password"
           placeholder="Mot de passe"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
         /><br />
         <button type="submit">Se connecter</button>
       </form>
-    </main>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+    </div>
   );
 }
 
