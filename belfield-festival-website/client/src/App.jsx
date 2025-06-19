@@ -9,6 +9,7 @@ import Info from './pages/Info';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Artists from './pages/Artists';
+import AddArtist from './pages/AddArtist';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/info" element={<Info />} />
         <Route path="/login" element={<Login />} />
         <Route path="/artists" element={<Artists />} />
+        <Route path="/add-artist" element={<AddArtist />} />
         <Route
           path="/dashboard"
           element={
