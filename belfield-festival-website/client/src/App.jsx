@@ -20,10 +20,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/schedule" element={<Schedule />} />
         <Route path="/gallery" element={<Gallery />} />
-        <Route path="/info" element={<Info />} />
+        <Route path="/billetterie" element={<Info />} />
         <Route path="/login" element={<Login />} />
         <Route path="/artists" element={<Artists />} />
-        <Route path="/add-artist" element={<AddArtist />} />
         <Route path="/events" element={<Events />} />
         <Route
           path="/dashboard"
