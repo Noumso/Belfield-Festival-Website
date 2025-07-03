@@ -30,9 +30,8 @@ const Info = () => {
 
         <label>Type de billet :</label>
         <select name="type" value={formData.type} onChange={handleChange}>
-          <option value="standard">Standard - 20€</option>
-          <option value="vip">VIP - 50€</option>
-          <option value="etudiant">Étudiant - 10€</option>
+          <option value="standard">Journée - 20€</option>
+          <option value="vip">Week-end - 40€</option>
         </select>
 
         <button type="submit">Réserver</button>

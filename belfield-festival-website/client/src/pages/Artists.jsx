@@ -1,16 +1,15 @@
 import React from 'react';
 import '../styles/Artists.css';
 
-import artist1 from '../assets/artists/artist1.jpg';
-import artist2 from '../assets/artists/artist2.jpg';
-import artist3 from '../assets/artists/artist3.jpg';
+import artist1 from "../assets/artists/D'RAM.jpg";
+import artist2 from '../assets/artists/Lalude.jpg';
 
 const artists = [
   {
-    name: 'DJ D'RAM',
+    name: "DJ D'RAM",
     genre: 'Électro',
     image: artist1,
-    description: 'Maître des platines, DJ D'RAM électrise les foules avec ses sets enflammés.'
+    description: "Maître des platines, DJ D'RAM électrise les foules avec ses sets enflammés."
   },
   {
     name: 'Lalude',
@@ -18,12 +17,6 @@ const artists = [
     image: artist2,
     description: 'Artiste du Belfield.'
   },
-  {
-    name: 'Ergasm God',
-    genre: 'Techno',
-    image: artist3,
-    description: 'Un mélange tehcno et hard techno.'
-  }
 ];
 
 const Artists = () => {

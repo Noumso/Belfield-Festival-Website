@@ -1,0 +1,50 @@
+.add-artist-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    font-family: Arial, sans-serif;
+    color: #333;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .add-artist-container h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .add-artist-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .add-artist-form input,
+  .add-artist-form textarea {
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+  
+  .add-artist-form textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  
+  .add-artist-form button {
+    padding: 0.9rem;
+    background-color: #28a745;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .add-artist-form button:hover {
+    background-color: #218838;
+  }
+  
