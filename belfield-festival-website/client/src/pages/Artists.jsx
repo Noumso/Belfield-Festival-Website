@@ -1,42 +1,45 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
+import '../styles/Artists.css';
+
+import artist1 from '../assets/artists/artist1.jpg';
+import artist2 from '../assets/artists/artist2.jpg';
+import artist3 from '../assets/artists/artist3.jpg';
+
+const artists = [
+  {
+    name: 'DJ D'RAM',
+    genre: 'Électro',
+    image: artist1,
+    description: 'Maître des platines, DJ D'RAM électrise les foules avec ses sets enflammés.'
+  },
+  {
+    name: 'Lalude',
+    genre: 'Electro',
+    image: artist2,
+    description: 'Artiste du Belfield.'
+  },
+  {
+    name: 'Ergasm God',
+    genre: 'Techno',
+    image: artist3,
+    description: 'Un mélange tehcno et hard techno.'
+  }
+];
 
 const Artists = () => {
-  const [artists, setArtists] = useState([]);
-
-  useEffect(() => {
-    axios.get('/api/artists')
-      .then(res => setArtists(res.data))
-      .catch(err => console.error('Erreur chargement artistes :', err));
-  }, []);
-
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>🎤 Artistes</h2>
-      {artists.length === 0 ? (
-        <p>Aucun artiste disponible.</p>
-      ) : (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-          {artists.map(artist => (
-            <div key={artist._id} style={{
-              border: '1px solid #ccc',
-              borderRadius: '8px',
-              width: '200px',
-              padding: '1rem',
-              boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
-            }}>
-              <img
-                src={artist.image || 'https://via.placeholder.com/200'}
-                alt={artist.name}
-                style={{ width: '100%', borderRadius: '8px' }}
-              />
-              <h3>{artist.name}</h3>
-              <p><em>{artist.genre}</em></p>
-              <p>{artist.description}</p>
-            </div>
-          ))}
-        </div>
-      )}
+    <div className="artists-container">
+      <h1>Nos Artistes</h1>
+      <div className="artist-list">
+        {artists.map((artist, index) => (
+          <div className="artist-card" key={index}>
+            <img src={artist.image} alt={artist.name} />
+            <h3>{artist.name}</h3>
+            <p><strong>Genre :</strong> {artist.genre}</p>
+            <p>{artist.description}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
