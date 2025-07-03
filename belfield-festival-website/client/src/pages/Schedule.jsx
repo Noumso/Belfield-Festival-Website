@@ -6,23 +6,16 @@ function Schedule() {
     {
       day: 'Vendredi',
       events: [
-        { time: '18:00', artist: 'DJ Nova', stage: 'Scène A' },
-        { time: '20:00', artist: 'Les Étoiles', stage: 'Scène B' },
+        { time: '18:00', artist: "DJ D'RAM", stage: 'Scène A' },
+        { time: '20:00', artist: 'Lalude', stage: 'Scène B' },
       ],
     },
     {
       day: 'Samedi',
       events: [
-        { time: '16:00', artist: 'Electro Pulse', stage: 'Scène A' },
-        { time: '19:00', artist: 'Chanteuse Luna', stage: 'Scène C' },
-        { time: '21:00', artist: 'Rock Syndicate', stage: 'Main Stage' },
-      ],
-    },
-    {
-      day: 'Dimanche',
-      events: [
-        { time: '14:00', artist: 'Zen Vibes', stage: 'Scène C' },
-        { time: '17:00', artist: 'Finale Surprise', stage: 'Main Stage' },
+        { time: '16:00', artist: 'Ergasm God', stage: 'Scène A' },
+        { time: '19:00', artist: 'Matrakk', stage: 'Scène C' },
+        { time: '21:00', artist: 'Amygdala', stage: 'Main Stage' },
       ],
     },
   ];

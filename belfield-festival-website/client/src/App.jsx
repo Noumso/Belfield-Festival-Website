@@ -11,6 +11,7 @@ import Dashboard from './pages/Dashboard';
 import Artists from './pages/Artists';
 import AddArtist from './pages/AddArtist';
 import Events from './pages/Events';
+import Tickets from './pages/Tickets';
 
 function App() {
   return (
@@ -24,6 +25,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/artists" element={<Artists />} />
         <Route path="/events" element={<Events />} />
+        <Route path="/add-artist" element={<AddArtist />} />
+        <Route path="/tickets" element={<Tickets />} />
         <Route
           path="/dashboard"
           element={

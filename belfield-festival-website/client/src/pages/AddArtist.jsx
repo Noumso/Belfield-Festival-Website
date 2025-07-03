@@ -1,41 +1,45 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import '../styles/AddArtist.css';
 
-function AddArtist() {
-  const [artist, setArtist] = useState({ name: '', description: '', image: '' });
-  const [message, setMessage] = useState('');
+const AddArtist = () => {
+  const [artist, setArtist] = useState({
+    name: '',
+    genre: '',
+    description: '',
+    image: ''
+  });
 
   const handleChange = (e) => {
     setArtist({ ...artist, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      await axios.post('/api/artists', artist);
-      setMessage('Artiste ajouté avec succès 🎉');
-      setArtist({ name: '', description: '', image: '' });
-    } catch (err) {
-      setMessage("Erreur lors de l'ajout ❌");
-      console.error(err);
-    }
+    alert(`Artiste ajouté : ${artist.name}\nGenre : ${artist.genre}\nDescription : ${artist.description}`);
+    // À remplacer par un appel backend plus tard
+    setArtist({ name: '', genre: '', description: '', image: '' });
   };
 
   return (
-    <div>
-      <h2>Ajouter un artiste</h2>
-      {message && <p>{message}</p>}
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Nom" value={artist.name} onChange={handleChange} required />
-        <br />
-        <textarea name="description" placeholder="Description" value={artist.description} onChange={handleChange} required />
-        <br />
-        <input type="text" name="image" placeholder="URL de l'image" value={artist.image} onChange={handleChange} />
-        <br />
+    <div className="add-artist-container">
+      <h1>Ajouter un artiste</h1>
+      <form onSubmit={handleSubmit} className="add-artist-form">
+        <label>Nom :</label>
+        <input type="text" name="name" value={artist.name} onChange={handleChange} required />
+
+        <label>Genre :</label>
+        <input type="text" name="genre" value={artist.genre} onChange={handleChange} required />
+
+        <label>Description :</label>
+        <textarea name="description" value={artist.description} onChange={handleChange} required />
+
+        <label>Image (URL) :</label>
+        <input type="text" name="image" value={artist.image} onChange={handleChange} />
+
         <button type="submit">Ajouter</button>
       </form>
     </div>
   );
-}
+};
 
 export default AddArtist;
