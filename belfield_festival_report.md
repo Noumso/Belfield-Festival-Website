@@ -5,7 +5,7 @@
 ## 1. 🧑‍💻 Team Formation Overview
 
 **Project Name:** Belfield Festival – Official Website  
-**Menber:** Noumane Bouqetyb, Gabriel Cohen, Emi Hatano
+**Member:** Noumane Bouqetyb, Gabriel Cohen, Emi Hatano
 
 **Roles:**
 - Project Manager & Communication with the Belfield Association<br>
