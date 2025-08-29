@@ -2,26 +2,29 @@
 
 ---
 
-## 1. 🧑‍💻 Team Formation Overview (Solo)
+## 1. 🧑‍💻 Team Formation Overview
 
 **Project Name:** Belfield Festival – Official Website  
-**Created by:** [Noumane Bouqetyb]
+**Menber:** Noumane Bouqetyb, Gabriel Cohen, Emi Hatano
 
 **Roles:**
-- Project Manager
-- Frontend & Backend Developer
-- UX/UI Designer
-- Content Manager
-- Communication with the Belfield Association
+- Project Manager & Communication with the Belfield Association<br>
+  → Noumane Bouqueyb <br>
+- UX/UI Designer & Content Manager<br>
+  → Gabriel Cohen<br>
+- Technical Lead (Mainly responsible for frontend and backend development.)<br>
+ → Emi Hatano
+- Coding, development, testing, and the final presentation<br>
+  → All team members
 
-**Personal Organization:**
+**Group Organization:**
 - **Project Management:** Trello (TODO / IN PROGRESS / DONE)
-- **Daily Follow-up:** Personal notes + Google Calendar
+- **Daily Follow-up:** Daily updates via group chat (Slack ) + Google Calendar
 - **Code Repository:** GitHub
 - **Tools Used:**
   - Design: Figma
   - Development: VS Code
-  - Communication: Email Zoom (with the Belfield association)
+  - Communication: Zoom + Email (with Belfield Association), Slack (internal)
   - Documentation: Google Docs
 
 ---
