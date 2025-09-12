@@ -21,14 +21,18 @@ The Belfield Festival Website project aims to provide a professional, responsive
 **Internal Stakeholders:**
 | Role                | Name               | Responsibilities                                                 |
 |---------------------|--------------------|------------------------------------------------------------------|
-| Project Owner       | Noumane Bouqetyb        | Oversees the entire project, development, design, communication |
-| Technical Mentor    | Holberton Tutors   | Provide technical support, review deliverables                   |
+|Project Manager & Communication Lead        | Noumane Bouqetyb        |Manage planning, coordinate with Belfield Association, ensure deadlines |
+|UX/UI & Content Manager  | Gabriel Cohen   |  Design mockups, ensure usability, manage website content | 
+|Technical Lead | Emi Hatano  | Lead frontend & backend development, support technical decisions |
+|Developers (All) | Whole Team |Collaboratively code, test, and prepare the final presentation |
 
 **External Stakeholders:**
 | Role                 | Organization        | Responsibilities                                  |
 |----------------------|---------------------|---------------------------------------------------|
 | Client               | Belfield Association | Provide content, validate design, define priorities |
 | End Users            | Festival Audience    | Use the website to get information, access tickets |
+|Technical Mentors  | Holberton Tutors  | Provide technical support, review deliverables
+ |
 
 ---
 
@@ -58,10 +62,11 @@ The Belfield Festival Website project aims to provide a professional, responsive
 | Risk                                              | Mitigation Strategy                                                  |
 |---------------------------------------------------|----------------------------------------------------------------------|
 | Delay in content delivery from the association    | Request all content by a fixed early deadline with reminders         |
-| Limited time for solo development                 | Prioritize MVP features, avoid overengineering                       |
-| Lack of backend deployment experience             | Use Firebase or Render for simpler deployment solutions              |
+| Coordination challenges in team development                 |    Use Trello and weekly meetings to align progress                    |
+| Different skill levels among members             | Assign tasks based on strengths, use pair programming for complex tasks, and schedule short knowledge-sharing sessions within the team       |
 | Bugs or regressions in admin dashboard            | Write tests and perform frequent manual QA during development        |
 | Security vulnerabilities in account/login system  | Use Firebase Auth or Auth0, avoid storing passwords manually         |
+
 
 ---
 
@@ -72,7 +77,7 @@ The Belfield Festival Website project aims to provide a professional, responsive
 | Stage 1 – Idea Development  | Week 1–2    | Brainstorm, evaluate, and select MVP concept        |
 | Stage 2 – Project Charter   | Week 3–4    | Define scope, risks, objectives, timeline           |
 | Stage 3 – Technical Docs    | Week 5–6    | Design system architecture, mockups, and workflows  |
-| Stage 4 – MVP Development   | Week 7–10   | Build core features and test                        |
+| Stage 4 – MVP Development   | Week 7–10   |  Team collaborates on frontend & backend, build and test core features  |
 | Stage 5 – Project Closure   | Week 11–12  | Final presentation, reflections, and documentation  |
 
 ---
