@@ -35,7 +35,7 @@ Wireframes created for key pages using Figma:
 - Ticketing (login/signup and purchase)  
 - Admin Dashboard  
 
-[Link to Figma mockups]
+<img width="1170" height="1241" alt="image" src="https://github.com/user-attachments/assets/454f4bce-54aa-4c37-8510-8da4077d946f" />
 
 ---
 
