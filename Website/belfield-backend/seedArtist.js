@@ -21,7 +21,7 @@ const artists = [
     },
 ];
 
-const seedArtists = async () => {
+const seedArtist = async () => {
   try {
     await mongoose.connect(MONGO_URI);
     console.log("✅ MongoDB connecté");
@@ -41,4 +41,4 @@ const seedArtists = async () => {
   }
 };
 
-seedArtists();
+seedArtist();
