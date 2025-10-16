@@ -1,5 +1,6 @@
 import './globals.css'
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 
 export const metadata = {
@@ -10,9 +11,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
  return (
     <html lang="fr">
-      <body className="bg-gradient-to-b from-gray-900 to-black text-white">
+      <head>
+      <link href="https://fonts.googleapis.com/css2?family=BBH+Sans+Hegarty&family=Ultra&display=swap" rel="stylesheet" 
+      />
+      </head>
+      <body className="bg-gradient-to-b from-gray-900 to-black text-white min-h-screen">
         <Navbar />
-        <main className="p-8">{children}</main>
+        <main className="w-full">{children}</main>
+        <Footer />
       </body>
     </html>
   );
