@@ -10,6 +10,7 @@ import volunteerRoutes from "./routes/volunteerRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import ticketRoutes from "./routes/ticketRoutes.js";
 import errorHandler from "./middleware/errorHandler.js";
+import adminRoutes from "./routes/adminRoutes.js";
 
 dotenv.config();
 connectDB();
@@ -27,6 +28,7 @@ app.use("/api/gallery", galleryRoutes);
 app.use("/api/volunteers", volunteerRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/tickets", ticketRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.use(errorHandler);
 
