@@ -48,7 +48,7 @@ Wireframes created for key pages using Figma:
                                           |
                                           v
                              +------------------------+
-                             |    Front-End (React)   |
+                             |    Front-End (Next)   |
                              +------------------------+
                              | Pages: Home, Info,     |
                              | Schedule, Ticketing    |

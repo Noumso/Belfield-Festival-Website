@@ -14,7 +14,7 @@ The main goal of this project is to create a real and practical website for the 
 - **Admin dashboard** for managing content dynamically.
 
 ## Technologies Used
-- **Frontend:** HTML, CSS, JavaScript (React for dynamic content)
+- **Frontend:** HTML, CSS, JavaScript (Next for dynamic content)
 - **Backend:** Node.js (Express)
 - **Database:** Firebase (for content storage)
 - **Design:** Figma (UI/UX Design)
