@@ -1,0 +1,35 @@
+:x
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Billetterie</title>
+  <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+  <h1>Billetterie</h1>
+  <p>Billet : 15 €</p>
+  <label for="quantity">Quantité :</label>
+  <input type="number" id="quantity" value="1" min="1">
+  <button id="buyBtn">Acheter</button>
+
+  <script>
+    document.getElementById('buyBtn').addEventListener('click', async () => {
+      const quantity = parseInt(document.getElementById('quantity').value);
+
+      const res = await fetch('http://localhost:4242/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ quantity })
+      });
+
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert("Erreur : " + data.error);
+      }
+    });
+  </script>
+</body>
+</html>
+
