@@ -1,9 +1,9 @@
 const errorHandler = (err, req, res, next) => {
-    const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
-    res.status(statusCode).json({
-      message: err.message,
-      stack: process.env.NODE_ENV === "production" ? null : err.stack,
-    });
-  };
-  export default errorHandler;
-  
+  console.error(err);
+  const statusCode = res.statusCode && res.statusCode !== 200 ? res.statusCode : 500;
+  res.status(statusCode).json({
+    message: err.message || "Erreur serveur",
+    stack: process.env.NODE_ENV === "production" ? undefined : err.stack,
+  });
+};
+export default errorHandler;

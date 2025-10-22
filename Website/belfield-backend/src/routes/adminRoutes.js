@@ -4,8 +4,8 @@ import { protectAdmin } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/register", registerAdmin); // Créer un admin
-router.post("/login", loginAdmin);       // Se connecter
-router.get("/profile", protectAdmin, getAdminProfile); // Info admin protégé
+router.post("/register", registerAdmin);
+router.post("/login", loginAdmin);
+router.get("/profile", protectAdmin, getAdminProfile);
 
 export default router;
