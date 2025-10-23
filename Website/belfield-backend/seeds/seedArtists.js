@@ -7,11 +7,11 @@ const MONGO_URI = process.env.MONGO_URI;
 
 const artists = [
   {
-    name: "DJ Belfield",
+    name: "D'RAM",
     style: "Electro",
     bio: "Le son phare du festival Belfield.",
-    image: "https://example.com/dj-belfield.jpg",
-    socials: { instagram: "https://instagram.com/dj-belfield" },
+    image: "https://www.instagram.com/woodland_festival/p/Cw0Lcr9ozWN/",
+    socials: { instagram: "https://www.instagram.com/julesderramond/" },
     order: 1
   },
   {
