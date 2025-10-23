@@ -14,6 +14,7 @@ export default {
         fontFamily: {
           bbh: ["'BBH Sans Hegarty'", "sans-serif"],
           comic: ["'Comic Relief'", "serif"],
+          roboto: ["'Roboto'", "sans-serif"],
         },
         keyframes: {
           fadeInUp: {

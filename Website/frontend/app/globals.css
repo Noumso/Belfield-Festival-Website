@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes shine {
+  0% {
+    background-position: -200%;
+  }
+  100% {
+    background-position: 200%;
+  }
+}
+
+.shiny-text {
+  background: linear-gradient(90deg, #ffffff, #ff9e0d, #ffffff);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 3s linear infinite;
+}

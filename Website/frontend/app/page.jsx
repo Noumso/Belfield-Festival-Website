@@ -2,30 +2,33 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
-
-// list of festival images
-const festivalImages = [
-  "/images/festival1.jpg",
-  "/images/festival2.jpg",
-  "/images/festival3.jpg",
-  "/images/festival4.jpg",
-  "/images/festival5.jpg",
-];
 
 export default function HomePage() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 }); 
 
-  // for scroll animation
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef(null);
 
+  // countdown (pour 15 août 2026)
   useEffect(() => {
+    const targetDate = new Date("2026-08-15T00:00:00");
     const interval = setInterval(() => {
-      setCurrentIndex((prev) =>
-        prev === festivalImages.length - 1 ? 0 : prev + 1
-      );
-    }, 5000);
+      const now = new Date();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        clearInterval(interval);
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      } else {
+        setTimeLeft({
+          days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((diff / (1000 * 60)) % 60),
+          seconds: Math.floor((diff / 1000) % 60),
+        });
+      }
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
 
@@ -37,7 +40,9 @@ export default function HomePage() {
           if (entry.isIntersecting) {
             entry.target.classList.add("animate-slideInUp");
             entry.target.classList.remove("opacity-0");
-            observer.unobserve(entry.target);
+          } else {
+          entry.target.classList.remove("animate-slideInUp");
+          entry.target.classList.add("opacity-0");
           }
         });
       },
@@ -50,274 +55,357 @@ export default function HomePage() {
     return () => observer.disconnect();
   }, []);
 
+  // 🎸 Line-up
+  const lineup = [
+    "MATRAKK", "AMYGDALA", "FENRICK", "A5KM", "EARGASM GOD",
+    "NURE", "KICHTA", "D'RAM", "BEL CREW", "BEN CANDEL",
+    "BENKEN", "GABRAIZE", "EUROPE", "KATE SELECTA B2B JAKARTA",
+    "LALUDE", "MARCEL DK B2B MILIORYANDO", "NAT3", "SEG"
+  ];
+
 
   return (
     <div>
-    <div className="bg-black min-h-screen flex items-center justify-center">
-      <div className="relative w-full max-w-5xl h-[500px] md:h-[700px] overflow-hidden rounded-xl shadow-lg">
-        
-        {/* slide image */}
-        {festivalImages.map((src, index) => (
-          <Image
-            key={index}
-            src={src}
-            alt={`Festival ${index + 1}`}
-            fill
-            className={`object-cover transition-opacity duration-1000 ${
-              index === currentIndex ? "opacity-100" : "opacity-0"
-            }`}
-          />
-        ))}
+    {/* ===== Section 1: Violet Background ===== */}
+      <section className="bg-[#4F0F5A] text-white py-20 font-roboto text-center scroll-animate opacity-0">
+        <h2 className="text-4xl md:text-5xl font-bold mb-4">BELFIELD FESTIVAL 2025</h2>
+        <p className="text-2xl md:text-3xl mb-6">15 & 16 AOÛT – PARC DE LA LÈRE, CAUSSADE</p>
 
-        {/* overlay */}
-        <div className="absolute inset-0 bg-black/40 z-10 pointer-events-none" />
+        <p className="text-xl italic mb-8">
+          “Deux jours de musique, d’énergie et de liberté au cœur du Tarn-et-Garonne.”
+        </p>
 
-        {/* title */}
-        <div className="absolute inset-0 flex flex-col items-center justify-start text-center z-20 pt-16">
-          <h1
-            key={currentIndex} // to retrigger animation
-            className="font-bbh text-5xl md:text-7xl text-white bg-black/50 rounded-lg px-6 py-3 mb-4 animate-fadeInUp"
-          >
-            Belfield Festival
-          </h1>
-          <p className="text-white text-2xl md:text-3xl bg-black/40 rounded-lg px-4 py-2 mb-2 animate-fadeInUp">
-            15 — 16 Août 2025
-          </p>
-          <p className="text-white text-xl md:text-2xl bg-black/40 rounded-lg px-4 py-2 animate-fadeInUp">
-            Parc de la Lère, Caussade, France
-          </p>
+        {/* 🎬 Aftermovie placeholder */}
+        <div className="scroll-animate opacity-0 mb-12 flex justify-center">
+          <div className="w-full max-w-3xl h-[400px] bg-black/40 rounded-lg flex items-center justify-center text-gray-300 text-lg">
+            🎬 Aftermovie à venir
+          </div>
         </div>
+
+        {/* Countdown */}
+        <div className="scroll-animate opacity-0 mb-12">
+          <h3 className="text-2xl font-semibold mb-3">⏳ Jusqu'au prochain festival (15 et 16 août 2026)</h3>
+          <div className="text-3xl font-bold tracking-wide">
+            {timeLeft.days}j {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
+          </div>
+        </div>
+
+        {/* Line-up */}
+        <div className="scroll-animate opacity-0 max-w-4xl mx-auto mb-10">
+          <h3 className="text-3xl font-bold mb-6">🎵 LINE-UP</h3>
+          <div className="flex flex-wrap justify-center gap-4 text-lg md:text-xl">
+            {lineup.map((artist, i) => (
+              <span key={i} className="bg-white/10 px-4 py-2 rounded-lg border border-white/20">
+                {artist}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Buttons */}
+        <div className="scroll-animate opacity-0 flex flex-col md:flex-row justify-center items-center gap-6 mt-10">
+          <Link
+            href="/tickets"
+            className="bg-orange hover:bg-orange-500 text-white font-bold py-3 px-8 rounded-full shadow-lg transition"
+          >
+            🎟 Réservez vos places
+          </Link>
+          <Link
+            href="/benevolat"
+            className="bg-transparent border border-white hover:bg-white hover:text-[#4F0F5A] font-bold py-3 px-8 rounded-full transition"
+          >
+            🤝 Devenez bénévole
+          </Link>
+        </div>
+      </section>
+
+      {/* SECTION 2 - L’expérience Belfield */}
+     <section className="bg-[#FF8200] text-white py-16 font-roboto">
+     <div className="max-w-6xl mx-auto px-6 md:px-10">
+      {/* Titre */}
+      <h2 className="scroll-animate opacity-0 text-4xl md:text-5xl font-bold text-center mb-4">
+        L’expérience Belfield
+      </h2>
+      <p className="scroll-animate opacity-0 italic text-center text-lg md:text-xl mb-12">
+        Une aventure sonore et humaine unique, née de la passion et de l’amitié.
+      </p>
+
+      {/* Contenu principal */}
+      <div className="scroll-animate opacity-0 flex flex-col md:flex-row items-center justify-between gap-10">
+      {/* Colonne gauche - texte */}
+      <div className="md:w-1/2 space-y-5">
+        <p className="text-lg md:text-xl leading-relaxed">
+          En 2025, le Belfield Festival revient plus fort que jamais pour sa 6ᵉ édition.
+          Deux jours de fête électro et techno, un cadre naturel exceptionnel, une ambiance
+          vibrante et 2000 festivaliers venus partager la même passion.
+        </p>
+
+        <ul className="text-lg md:text-xl leading-relaxed space-y-2">
+          <li>✨ Des shows enflammés</li>
+          <li>🫶 65 bénévoles dévoués</li>
+          <li>🎧 20 artistes sur deux scènes</li>
+          <li>🔥 Et une atmosphère qu’on n’oublie jamais.</li>
+        </ul>
+      </div>
+
+      {/* Colonne droite - image */}
+      <div className="md:w-1/2 flex justify-center">
+        <Image
+          src="/images/home_photo1.jpg"
+          alt="Expérience Belfield"
+          width={600}
+          height={400}
+          className="rounded-lg shadow-lg object-cover w-full h-auto"
+        />
       </div>
     </div>
 
-    {/* New Home Section */}
-      <div className="bg-gradient-to-b from-blue-100 via-green-50 to-green-100 py-16 font-comic">
-        {/*section titre*/}
-        <h2 className="scroll-animate opacity-0 text-4xl md:text-5xl font-bold text-center text-gray-900 mb-12">
-        ACCUEIL
-        </h2>
+      {/* Aftermovie - video embed */}
+      <div className="scroll-animate opacity-0 text-center mt-16">
+        <h3 className="text-2xl md:text-3xl font-semibold mb-6">
+          🎬 Découvre l'Aftermovie 2024
+        </h3>
+        <video
+        className="rounded-xl shadow-lg mx-auto mt-6"
+        controls
+        width="100%"
+        >
+        <source src="/videos/aftermovie2024.mp4" type="video/mp4" />
+        Votre navigateur ne supporte pas la lecture vidéo.
+      </video>
+      </div>
+      </div>
+      </section>
+      {/* SECTION 3 - Les temps forts de 2025 */}
+      <section className="bg-[#4F0F5A] text-white py-16 font-roboto">
+        <div className="max-w-6xl mx-auto px-6 md:px-10">
+    
+      {/* Titre */}
+      <h2 className="scroll-animate opacity-0 text-4xl md:text-5xl font-bold text-center mb-4">
+        Les temps forts de 2025
+      </h2>
+      <p className="scroll-animate opacity-0 italic text-center text-lg md:text-xl mb-12">
+        Du son, du fun, et un brin de folie.
+      </p>
 
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-8 px-4">
-          
-          {/* Left Image */}
-          <div className="scroll-animate opacity-0 md:w-1/2 w-full">
-            <Image
-              src="/images/homepage_image1.jpg" 
-              alt="Belfield Festival"
-              width={800}
-              height={500}
-              className="rounded-lg object-cover w-full h-full"
-            />
-          </div>
-
-          {/* Right Text */}
-          <div className="scroll-animate opacity-0 md:w-1/2 w-full">
-            <p className="text-gray-800 text-lg md:text-xl mb-4">
-              Le Belfield Festival est un événement musical incontournable qui se déroule chaque été, attirant des centaines de passionnés de musique venus découvrir des performances électrisantes d'artistes locaux et internationaux.
-            </p>
-            <p className="text-gray-800 text-lg md:text-xl mb-4">
-              Situé dans un cadre naturel unique, le festival propose une expérience immersive où les festivaliers peuvent profiter de concerts en plein air, de scènes variées et d'animations créatives.
-            </p>
-            <p className="text-gray-800 text-lg md:text-xl mb-4">
-              Véritable célébration de la culture musicale et de la convivialité, le Belfield Festival offre une atmosphère chaleureuse et festive, alliant la magie des paysages à des moments inoubliables.
-            </p>
-            <p className="text-gray-800 text-lg md:text-xl font-bold mb-4">
-              CETTE ANNÉE, LE FESTIVAL S'ÉTEND SUR 2 JOURS. N'ATTENDEZ PLUS ET PRENEZ VOTRE BILLET DÈS MAINTENANT.
-            </p>
-            <p className="text-gray-800 text-lg md:text-xl font-bold">
-              IL N'EST JAMAIS TROP TÔT POUR FAIRE LA FÊTE 🌟
-            </p>
-          </div>
-        </div>
+      {/* Contenu principal */}
+      <div className="scroll-animate opacity-0 flex flex-col md:flex-row items-center justify-between gap-10">
+      
+      {/* Texte à gauche */}
+      <div className="md:w-1/2 space-y-5 text-lg md:text-xl leading-relaxed">
+        <p>
+          • <span className="font-semibold">Vendredi 15 août : 18h – 2h</span><br />
+          Première nuit de fête avec une programmation explosive.
+        </p>
+        <p>
+          • <span className="font-semibold">Samedi 16 août : 14h – 3h</span><br />
+          Après-midi “Oies-lympiades” (épreuves sportives et surprises 🏆)<br />
+          ◦ Seconde soirée jusqu’au bout de la nuit.
+        </p>
+        <p className="text-orange-300 font-semibold">
+          🎁 Le grand gagnant des Oies-lympiades a remporté… une place pour le Belfield à vie !
+        </p>
       </div>
 
-   {/* LINE UP Section */}
-<div className="bg-gradient-to-b from-blue-100 via-green-50 to-green-100 py-16 font-comic">
-  <div className="max-w-6xl mx-auto px-4">
-    
-    {/*section titre*/}
-    <h2 className="scroll-animate opacity-0 text-4xl md:text-5xl font-bold text-center text-black mb-12 animate-fadeInUp">
-      LINE UP
-    </h2>
-    
-    <div className="flex flex-col md:flex-row items-start md:items-center gap-8">
-      
-      {/* left: artists list */}
-      <ul className="scroll-animate opacity-0 md:w-1/2 w-full text-gray-800 text-lg md:text-xl space-y-2">
-        {[
-          "MATRAKK", "AMYGDALA", "FENRICK", "A5KM", "EARGASM GOD",
-          "NURE", "KICHTA", "D'RAM", "BEL CREW", "BEN CANDEL",
-          "BENKEN", "GABRAIZE", "EUROPE", "KATE SELECTA B2B JAKARTA",
-          "LALUDE", "MARCEL DK B2B MILIORYANDO", "NAT3", "SEG"
-        ].map((artist, index) => (
-          <li
-            key={index}
-            className="opacity-0 animate-fadeInUp"
-            style={{ animationDelay: `${index * 0.1}s` }} 
-          >
-            {artist}
-          </li>
-        ))}
-      </ul>
-      
-      {/* right: image */}
-      <div className="scroll-animate opacity-0 md:w-1/2 w-full opacity-0 animate-fadeInUp" style={{ animationDelay: `0.2s` }}>
+      {/* Image à droite */}
+      <div className="md:w-1/2 flex justify-center">
         <Image
-          src="/images/homepage_image2.jpg"
-          alt="Line Up"
+          src="/images/home_photo3.jpg"
+          alt="Les temps forts de Belfield Festival"
           width={600}
-          height={600}
-          className="rounded-lg object-cover w-full h-full shadow-lg"
+          height={400}
+          className="rounded-lg shadow-lg object-cover w-full h-auto"
+        />
+        </div>
+      </div>
+      </div>
+      </section>
+      {/* SECTION 4 - L’univers du festival */}
+      <section className="bg-[#FF8200] text-white py-16 font-roboto">
+      <div className="max-w-6xl mx-auto px-6 md:px-10">
+    
+      {/* Titre */}
+      <h2 className="scroll-animate opacity-0 text-4xl md:text-5xl font-bold text-center mb-4">
+        L’univers du festival
+      </h2>
+      <p className="scroll-animate opacity-0 italic text-center text-lg md:text-xl mb-12">
+        Bien plus qu’un festival : une expérience complète.
+      </p>
+
+      {/* Contenu principal */}
+       <div className="scroll-animate opacity-0 flex flex-col md:flex-row items-center justify-between gap-10">
+      
+      {/* Image à gauche */}
+      <div className="md:w-1/2 flex justify-center">
+        <Image
+          src="/images/home_photo4.jpg"
+          alt="L’univers du festival Belfield"
+          width={600}
+          height={400}
+          className="rounded-lg shadow-lg object-cover w-full h-auto"
         />
       </div>
 
-    </div>
-    </div>
-  </div>
-  {/* New Section: UN FESTIVAL PENSÉ POUR VOUS */}
-<div className="bg-gradient-to-b from-blue-100 via-green-50 to-green-100 py-16 font-comic">
-  <h2 className="scroll-animate opacity-0 text-4xl md:text-5xl font-bold text-center mb-12 text-black animate-fadeInUp">
-    🌲🏕️ UN FESTIVAL PENSÉ POUR VOUS :
-  </h2>
-
-  <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-8 px-4">
-    {/* Item 1 */}
-    <div className="scroll-animate opacity-0 md:w-1/3 bg-white/70 backdrop-blur-md rounded-lg p-6 text-center animate-fadeInUp">
-      <div className="text-6xl mb-4">🏕️</div>
-      <p className="text-gray-800 text-lg md:text-xl">
-        Camping et parking gratuits pour vivre l’expérience à fond, en toute sérénité. Le tout à Caussade, au parc de la lère.
-      </p>
-    </div>
-
-    {/* Item 2 */}
-    <div className="scroll-animate opacity-0 md:w-1/3 bg-white/70 backdrop-blur-md rounded-lg p-6 text-center animate-fadeInUp">
-      <div className="text-6xl mb-4">🍔</div>
-      <p className="text-gray-800 text-lg md:text-xl">
-        Une ambiance conviviale avec buvette et restauration rapide pour recharger les batteries.
-      </p>
-    </div>
-
-    {/* Item 3 */}
-    <div className="scroll-animate opacity-0 md:w-1/3 bg-white/70 backdrop-blur-md rounded-lg p-6 text-center animate-fadeInUp">
-      <div className="text-6xl mb-4">🦎</div>
-      <p className="text-gray-800 text-lg md:text-xl">
-        Plongez dans l’univers festivalier avec des tatoueurs sur place, des friperies et des stands pour dénicher des pépites.
-      </p>
-    </div>
-  </div>
-</div>
-{/* New Section: Call to Action & Archive */}
-<div className="bg-gradient-to-b from-blue-100 via-green-50 to-green-100 py-16 font-comic">
-  <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-col gap-8">
-    
-    {/* Title + Button */}
-    <div className="flex flex-col md:flex-row items-center justify-between mb-8">
-      <h2 className="scroll-animate opacity-0 text-4xl md:text-5xl font-bold text-black mb-4 md:mb-0">
-        ALORS, PRÊT À REJOINDRE L’AVENTURE ?
-      </h2>
-      <a
-        href="/tickets"
-        className="scroll-animate opacity-0 bg-gradient-to-b from-green-500 to-green-700 text-white px-8 py-3 rounded-full 
-             text-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 
-             transition-all duration-300 whitespace-nowrap text-center inline-block"
-      >
-      Billetterie 6e édition
-      </a>
-    </div>
-
-  {/* Archive Description with Image */}
-  <div className="mb-6 flex flex-col md:flex-row items-center gap-8">
-  
-  {/* Left: Image */}
-  <div className="scroll-animate opacity-0 md:w-1/2 w-full">
-    <Image
-      src="/images/homepage_image3.jpg"
-      alt="Belfield Festival 2024"
-      width={600}
-      height={400}
-      className="rounded-lg object-cover w-full h-full"
-    />
-  </div>
-
-  {/* Right: Text */}
-  <div className="scroll-animate opacity-0 md:w-1/2 w-full">
-    <h3 className="text-2xl md:text-3xl font-semibold text-black mb-2">
-      Belfield Festival 2024 – Archives
-    </h3>
-    <p className="text-gray-800 text-lg md:text-xl mb-4">
-      Revivez les moments forts du Belfield Festival 2024 ! Découvrez une rétrospective de l’édition passée avec les meilleurs moments, des photos exclusives et les artistes qui ont marqué l’événement. Une occasion unique de revoir ou de découvrir l’ambiance incroyable du festival, de la scène principale aux surprises artistiques.
-    </p>
-    <a
-      href="/festival" // link to archive page
-      className="text-green-700 font-semibold underline hover:text-green-800 transition-colors text-lg md:text-xl"
-    >
-      Explorez l’archive complète et plongez dans l’édition 2024 du festival !
-    </a>
-    </div>
-    </div>
-    <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center gap-8">
-    {/* Left Text Content */}
-    <div className="scroll-animate opacity-0 md:w-1/2">
-      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-        Événements Connexion à Toulouse
-      </h2>
-      <p className="text-gray-800 text-lg mb-4">
-        Le Belfield Festival n’est pas seulement un événement annuel. Revivez nos soirées exceptionnelles à Connexion Toulouse, 
-        où nous avons fusionné musique et convivialité pour des événements mémorables.
-      </p>
-      <p className="text-gray-800 text-lg mb-4">
-        Concerts, DJ sets et soirées à thème, chaque événement à Toulouse a été une célébration de la musique et de la communauté.
-      </p>
-      <a
-        href="/evenements-toulouse"
-        className="inline-block mt-4 text-green-700 font-semibold text-lg hover:underline"
-      >
-        Découvrez nos événements à Toulouse et ne manquez pas la prochaine expérience !
-      </a>
-    </div>
-
-    {/* Right Image */}
-    <div className="scroll-animate opacity-0 md:w-1/2 w-full">
-      <img
-        src="/images/homepage_image4.jpg"
-        alt="Événements Connexion à Toulouse"
-        className="rounded-lg shadow-lg object-cover w-full h-[350px]"
-      />
-    </div>
-  </div>
-  </div>
-  {/* Section: Nos Prochains Événements */}
-<div className="bg-gradient-to-b from-green-100 via-blue-50 to-blue-100 py-16 font-comic">
-  <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center gap-8">
-
-    {/* Left Image */}
-    <div className="scroll-animate opacity-0 md:w-1/2 w-full">
-      <img
-        src="/images/homepage_image5.jpg"
-        alt="Nos Prochains Événements"
-        className="rounded-lg shadow-lg object-cover w-full h-[350px]"
-      />
-    </div>
-
-    {/* Right Text Content */}
-    <div className="scroll-animate opacity-0 md:w-1/2">
-      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-        Nos Prochains Événements
-      </h2>
-      <p className="text-gray-800 text-lg mb-4">
-        Ne manquez pas nos futurs événements ! Restez connectés pour des annonces excitantes concernant le Belfield Festival 2025 et d’autres initiatives dans toute la région.
-        Inscrivez-vous à notre newsletter ou suivez-nous sur les réseaux sociaux pour être informé des dernières actualités.
-      </p>
-      <a
-        href="/festival"
-        className="inline-block mt-4 text-green-700 font-semibold text-lg hover:underline"
-      >
-        Soyez le premier à savoir ce qui se prépare – Abonnez-vous maintenant !
-      </a>
+      {/* Texte à droite */}
+      <div className="md:w-1/2 space-y-5 text-lg md:text-xl leading-relaxed">
+        <p>
+          Tatouages, friperies, paillettes, prévention, foodtrucks, merchandising…<br />
+          Tout au long du week-end, le Belfield, c’est un petit village éphémère où chaque détail compte.
+        </p>
+        <p>
+          Et pour ton confort, un camping à moins de 500 mètres avec accès aux douches, 
+          en partenariat avec la mairie de Caussade.
+        </p>
+        </div>
+       </div>
       </div>
+     </section>
+      {/* SECTION 5 - Les artistes */}
+      <section className="bg-[#4F0F5A] text-white py-24 font-roboto scroll-animate opacity-0">
+        <div className="container mx-auto px-6 md:px-12 flex flex-col items-center gap-12">
+        {/* --- left text (全体中央寄せ) --- */}
+          <div className="w-full md:w-4/5 space-y-6 text-center md:text-left">
+            <h2 className="text-4xl md:text-5xl font-bold text-center">🎶Les artistes</h2>
+              <p className="italic text-lg text-gray-200 text-center">
+                 Une sélection d’artistes qui font vibrer la scène électro et techno.
+              </p>
+
+              <p className="text-base md:text-lg leading-relaxed text-center md:text-justify">
+                De <strong>Eargasm God</strong> à <strong>Fenrick</strong>, en passant par <strong>Matrakk</strong>,
+                <strong> A4KM</strong> et bien évidemment le <strong>Bel’Crew</strong>, le Belfield 2025 promet une
+                programmation puissante, éclectique et inoubliable.
+              </p>
+
+            {/* --- Stylish Line Up --- */}
+            <div className="mt-10">
+              <h3 className="text-3xl font-extrabold mb-6 tracking-wide text-center">
+                🎧 Line Up
+              </h3>
+
+             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 text-lg font-semibold uppercase tracking-wide">
+               {[
+                  "Matrakk", "Amygdala", "Fenrick", "A5KM", "Eargasm God",
+                  "Nure", "Kichta", "D'Ram", "Bel Crew", "Ben Candel",
+                  "Benken", "Gabraize", "Europe", "Kate Selecta B2B Jakarta",
+                  "Lalude", "Marcel DK B2B Milioryando", "Nat3", "Seg"
+                ].map((artist, index) => (
+                <div
+                  key={index}
+                  className="bg-white/10 hover:bg-white/20 transition-colors duration-300 rounded-lg py-3 px-4 text-center shadow-md hover:scale-105 transform"
+                >
+                  {artist}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+          {/* --- image at bottom center --- */}
+            <div className="w-full flex justify-center mt-12">
+              <img
+                src="/images/home_photo2.jpg"
+                alt="Artistes du Belfield Festival"
+                className="rounded-2xl shadow-lg w-full max-w-2xl object-cover"
+              />
+            </div>
+          </div>
+        </section>
+        {/* SECTION 6 - Rejoins l’équipe */}
+        <section className="bg-[#FF8200] text-white py-24 font-roboto scroll-animate opacity-0">
+          <div className="container mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center gap-12">
+    
+          {/* --- left text --- */}
+          <div className="md:w-1/2 space-y-6 scroll-animate opacity-0">
+            <h2 className="text-4xl md:text-5xl font-bold animate-slideInUp">
+              Rejoins l’équipe 💪
+            </h2>
+            <p className="italic text-lg md:text-xl mb-4 animate-slideInUp delay-100">
+              Le Belfield, c’est aussi une famille.
+            </p>
+
+            <p className="text-base md:text-lg leading-relaxed animate-slideInUp delay-200">
+              Chaque édition, plus de 60 bénévoles participent à faire vivre le festival.<br />
+              Que tu sois motivé, créatif ou juste curieux, viens vivre l’expérience de l’intérieur.
+            </p>
+
+            <p className="italic font-bold text-lg md:text-xl mt-4 animate-slideInUp delay-300">
+              “Rejoignez l’expérience, devenez bénévole.”
+            </p>
+
+              <a
+                href="https://docs.google.com/forms/your-form-link" // ← Google Form link here
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block mt-4 px-6 py-3 bg-white text-[#FF8200] font-bold rounded-lg hover:bg-gray-100 transition animate-slideInUp delay-400"
+              >
+              👉 S’inscrire
+              </a>
+            </div>
+
+            {/* --- right image --- */}
+              <div className="md:w-1/2 flex justify-center scroll-animate opacity-0 animate-slideInUp delay-200">
+                <Image
+                  src="/images/home_photo5.jpg"
+                  alt="Bénévoles du Belfield Festival"
+                  width={600}
+                  height={400}
+                  className="rounded-lg shadow-lg object-cover w-full h-auto"
+                />
+              </div>
+            </div>
+          </section>
+          {/* SECTION 7 - Souvenirs & émotions */}
+          <section className="bg-[#4F0F5A] text-white py-24 font-roboto scroll-animate opacity-0">
+             <div className="container mx-auto px-6 md:px-12 flex flex-col md:flex-row gap-12">
+
+            {/* --- left image --- */}
+            <div className="md:w-1/2 flex justify-center scroll-animate opacity-0 animate-slideInUp delay-200">
+              <Image
+                src="/images/home_photo6.jpg" 
+                alt="Souvenirs du Belfield Festival"
+                width={600}
+                height={400}
+                className="rounded-lg shadow-lg object-cover w-full h-auto"
+              />
+            </div>
+
+              {/* --- right text + buttons --- */}
+              <div className="md:w-1/2 flex flex-col justify-center space-y-6 scroll-animate opacity-0">
+                <h2 className="text-4xl md:text-5xl font-bold animate-slideInUp">
+                  📸 Souvenirs & émotions
+                </h2>
+              <p className="italic text-lg md:text-xl mb-4 animate-slideInUp delay-100">
+                Revivez les moments forts des éditions précédentes.
+              </p>
+
+              <p className="text-base md:text-lg leading-relaxed animate-slideInUp delay-200">
+                Car le Belfield, c’est aussi des sourires, des danses, et des souvenirs à la pelle.
+              </p>
+
+                {/* Buttons group */}
+                <div className="mt-6 flex flex-col md:flex-row md:space-x-4 space-y-3 md:space-y-0 justify-start animate-slideInUp delay-300">
+                  <a
+                    href="/edition-2025"
+                    className="inline-block px-5 py-3 bg-white text-[#4F0F5A] font-bold rounded-lg hover:bg-gray-100 transition"
+                  >
+                  Édition 2025
+                  </a>
+                  <a
+                    href="/edition-2024"
+                    className="inline-block px-5 py-3 bg-white text-[#4F0F5A] font-bold rounded-lg hover:bg-gray-100 transition"
+                  >
+                  Édition 2024
+                  </a>
+                  <a
+                    href="/edition-2023"
+                    className="inline-block px-5 py-3 bg-white text-[#4F0F5A] font-bold rounded-lg hover:bg-gray-100 transition"
+                  >
+                  Édition 2023
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
     </div>
-  </div>
-  </div>
-</div>
   );
 }

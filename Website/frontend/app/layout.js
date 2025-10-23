@@ -16,6 +16,8 @@ export default function RootLayout({ children }) {
       />
       <link href="https://fonts.googleapis.com/css2?family=BBH+Sans+Hegarty&family=Comic+Relief:wght@400;700&family=Ultra&display=swap" rel="stylesheet"
       />
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"
+      />
       </head>
       <body className="bg-gradient-to-b from-gray-900 to-black text-white min-h-screen">
         <Navbar />
