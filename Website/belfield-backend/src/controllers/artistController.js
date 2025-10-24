@@ -1,4 +1,4 @@
-import Artist from "../models/Artist.js";
+import Artist from "../models/artistModel.js";
 import asyncHandler from "../middleware/asyncHandler.js";
 
 export const getArtists = asyncHandler(async (req, res) => {
@@ -36,5 +36,5 @@ export const deleteArtist = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("Artist not found");
   }
-  res.json({ message: "Artist deleted" });
+  res.json({ message: "Artist removed" });
 });

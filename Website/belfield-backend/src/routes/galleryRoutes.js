@@ -1,12 +1,16 @@
 import express from "express";
 import {
-  getGallery,
-  createGalleryItem,
+  getGallery, getGalleryItem, createGalleryItem, updateGalleryItem, deleteGalleryItem
 } from "../controllers/galleryController.js";
+import { protectAdmin } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// Liste la galerie ou ajoute une nouvelle image
-router.route("/").get(getGallery).post(createGalleryItem);
+router.get("/", getGallery);
+router.get("/:id", getGalleryItem);
+
+router.post("/", protectAdmin, createGalleryItem);
+router.put("/:id", protectAdmin, updateGalleryItem);
+router.delete("/:id", protectAdmin, deleteGalleryItem);
 
 export default router;

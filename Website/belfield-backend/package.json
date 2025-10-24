@@ -1,23 +1,36 @@
 {
-    "name": "belfield-backend",
-    "version": "1.0.0",
-    "type": "module",
-    "scripts": {
-        "start": "node src/server.js",
-        "dev": "nodemon src/server.js"
-    },
-    "dependencies": {
-        "bcryptjs": "^3.0.2",
-        "cors": "^2.8.5",
-        "dotenv": "^16.0.0",
-        "express": "^4.18.2",
-        "express-validator": "^6.15.0",
-        "jsonwebtoken": "^9.0.2",
-        "mongoose": "^7.0.0",
-        "morgan": "^1.10.0",
-        "nodemailer": "^6.9.4"
-    },
-    "devDependencies": {
-        "nodemon": "^2.0.22"
-    }
+  "name": "belfield-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "seed:artists": "node seeds/seedArtists.js",
+    "seed:events": "node seeds/seedEvents.js",
+    "seed:tickets": "node seeds/seedTickets.js",
+    "seed:gallery": "node seeds/seedGallery.js",
+    "seed:volunteers": "node seeds/seedVolunteers.js",
+    "seed:all": "node seeds/seedAll.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^2.2.0",
+    "brew": "^0.0.8",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.2",
+    "express-validator": "^6.15.0",
+    "form-data": "^4.0.4",
+    "jsonwebtoken": "^9.0.2",
+    "mailgun-js": "^0.6.7",
+    "mailgun.js": "^12.1.1",
+    "mongod": "^2.0.0",
+    "mongoose": "^7.0.0",
+    "morgan": "^1.10.0",
+    "nodemailer": "^7.0.10",
+    "stripe": "^12.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
 }

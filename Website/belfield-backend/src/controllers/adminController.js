@@ -1,19 +1,17 @@
 import asyncHandler from "../middleware/asyncHandler.js";
-import Admin from "../models/Admin.js";
+import Admin from "../models/adminModel.js";
 import jwt from "jsonwebtoken";
 
-// Générer un token JWT
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "7d" });
 };
 
-// POST /api/admin/register
 export const registerAdmin = asyncHandler(async (req, res) => {
   const { username, email, password } = req.body;
-  const adminExists = await Admin.findOne({ email });
-  if (adminExists) {
+  const exists = await Admin.findOne({ email });
+  if (exists) {
     res.status(400);
-    throw new Error("Admin déjà existant");
+    throw new Error("Admin already exists");
   }
   const admin = await Admin.create({ username, email, password });
   res.status(201).json({
@@ -24,7 +22,6 @@ export const registerAdmin = asyncHandler(async (req, res) => {
   });
 });
 
-// POST /api/admin/login
 export const loginAdmin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   const admin = await Admin.findOne({ email });
@@ -37,21 +34,15 @@ export const loginAdmin = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(401);
-    throw new Error("Email ou mot de passe incorrect");
+    throw new Error("Invalid email or password");
   }
 });
 
-// GET /api/admin/profile
 export const getAdminProfile = asyncHandler(async (req, res) => {
-  const admin = await Admin.findById(req.admin.id);
-  if (admin) {
-    res.json({
-      _id: admin._id,
-      username: admin.username,
-      email: admin.email,
-    });
-  } else {
+  const admin = await Admin.findById(req.admin._id).select("-password");
+  if (!admin) {
     res.status(404);
-    throw new Error("Admin non trouvé");
+    throw new Error("Admin not found");
   }
+  res.json(admin);
 });

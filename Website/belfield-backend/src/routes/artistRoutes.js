@@ -1,18 +1,17 @@
 import express from "express";
 import {
-  getArtists,
-  getArtist,
-  createArtist,
-  updateArtist,
-  deleteArtist,
+  getArtists, getArtist, createArtist, updateArtist, deleteArtist
 } from "../controllers/artistController.js";
+import { validateArtist } from "../middleware/validate.js";
+import { protectAdmin } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// GET tous les artistes / POST un nouvel artiste
-router.route("/").get(getArtists).post(createArtist);
+router.get("/", getArtists);
+router.get("/:id", getArtist);
 
-// GET / PUT / DELETE un artiste par ID
-router.route("/:id").get(getArtist).put(updateArtist).delete(deleteArtist);
+router.post("/", protectAdmin, validateArtist, createArtist);
+router.put("/:id", protectAdmin, validateArtist, updateArtist);
+router.delete("/:id", protectAdmin, deleteArtist);
 
 export default router;
