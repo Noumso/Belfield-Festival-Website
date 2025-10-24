@@ -1,8 +1,34 @@
 import Ticket from "../models/ticketModel.js";
 import asyncHandler from "../middleware/asyncHandler.js";
 import Stripe from "stripe";
+import { sendEmail } from "../utils/mailgun.js";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "");
+
+// Ticket Controllers
+const sendTicketConfirmationEmail = async (ticket, paymentIntent) => {
+  const html = `
+    <h2>🎟️ Confirmation de votre billet - Belfield Festival</h2>
+    <p>Bonjour ${ticket.purchaserName || "cher participant"},</p>
+    <p>Merci pour votre achat ! Votre billet pour le <strong>Belfield Festival</strong> est confirmé.</p>
+    <ul>
+      <li><strong>Type :</strong> ${ticket.type}</li>
+      <li><strong>Quantité :</strong> ${ticket.quantity}</li>
+      <li><strong>Montant :</strong> ${paymentIntent.amount_received / 100} €</li>
+      <li><strong>Commande :</strong> ${paymentIntent.id}</li>
+    </ul>
+    <p>🎶 Nous avons hâte de vous voir à Caussade !</p>
+    <hr/>
+    <p>— L’équipe du Belfield Festival</p>
+  `;
+
+  await sendEmail({
+    to: ticket.purchaserEmail,
+    subject: "🎟️ Votre billet Belfield Festival est confirmé",
+    html,
+    text: `Merci ${ticket.purchaserName || ""}, votre billet est confirmé.`,
+  });
+};
 
 // GET /api/tickets
 export const getTickets = asyncHandler(async (req, res) => {
