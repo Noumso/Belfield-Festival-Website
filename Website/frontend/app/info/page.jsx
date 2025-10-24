@@ -28,27 +28,28 @@ export default function InfoPage() {
   }, []);
 
   return (
-      <main className="min-h-screen bg-gradient-to-b from-[#4F0F5A] to-[#3B0842] text-white py-16 font-roboto">
-        {/* titre */}
-        <div className="scroll-animate opacity-0 animate-slideInUp text-left ml-8">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">
-            À PROPOS
-          </h1>
-        </div>
-
-        <p className="scroll-animate opacity-0 italic text-lg md:text-xl text-purple-100 mt-2 animate-slideInUp delay-100 max-w-3xl leading-relaxed">
-          “Une aventure humaine née d’amitié et de passion.”
-        </p>
-
-      {/* section1 */}
-      <section className="bg-[#4F0F5A] text-white py-24 font-roboto scroll-animate opacity-0">
+      <main className="text-white font-roboto">
+      <section className="bg-[#4F0F5A] py-24 font-roboto">
         <div className="container mx-auto px-6 md:px-12 text-center space-y-8">
-          <h2 className="text-4xl md:text-5xl font-bold animate-slideInUp delay-200">
+
+          {/*titre */}
+          <div className="scroll-animate opacity-0 animate-slideInUp">
+            <h1 className="text-5xl md:text-6xl font-bold mb-4">
+              À PROPOS
+            </h1>
+            <p className="italic text-xl md:text-2xl text-purple-100 max-w-3xl mx-auto">
+              “Une aventure humaine née d’amitié et de passion.”
+            </p>
+          </div>
+
+          {/* contenu */}
+          <h2 className="scroll-animate opacity-0 text-4xl md:text-5xl font-bold animate-slideInUp delay-200 mt-12">
             💫 L’histoire du Belfield Festival
           </h2>
-          <p className="scroll-animate opacity-0 shiny-text italic text-lg md:text-xl text-purple-100 animate-slideInUp delay-300">
+          <p className="scroll-animate opacity-0 shiny-text italic text-lg md:text-xl text-purple-100 animate-slideInUp delay-300 max-w-3xl mx-auto">
             Une aventure née de la passion, de l’amitié et d’un rêve commun : faire vibrer le Sud-Ouest au son de la musique électronique.
           </p>
+
           <div className="max-w-4xl mx-auto text-left md:text-justify text-lg leading-relaxed space-y-4 animate-slideInUp delay-400">
             <p>
               Le Belfield Festival, c’est avant tout une histoire humaine.
@@ -66,15 +67,16 @@ export default function InfoPage() {
               l’équipe continue de repousser les limites de ce que peut être un événement musical.
             </p>
           </div>
-          {/* ここから画像部分 */}
-          <div className="scroll-animate opacity-0 animate-slideInUp delay-500 mt-12">
-          <Image
-            src="/images/image_for_history.jpg" 
-            alt="Le Belfield Festival"
-            width={800}
-            height={500}
-            className="rounded-lg shadow-lg mx-auto object-cover"
-          />
+
+          {/* image */}
+          <div className="scroll-animate opacity-0 animate-slideInUp delay-500 mt-12 flex justify-center">
+            <Image
+              src="/images/image_for_history.jpg" 
+              alt="Le Belfield Festival"
+              width={800}
+              height={500}
+              className="rounded-lg shadow-lg object-cover w-full max-w-3xl h-auto"
+            />
           </div>
         </div>
       </section>
@@ -149,7 +151,7 @@ export default function InfoPage() {
             {/*button*/}
             <div className="flex justify-center">
               <a
-                href="https://docs.google.com/forms/d/e/xxxxxxxxxxxxxxxxxxxxxxxxx/viewform" // Google Forms link placeholder
+                href="https://docs.google.com/forms/d/103kxFBL0xEYUb_YrmIypigL-HEvkz8DvHSP_czfN5rE/edit?pli=1" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block px-6 py-3 bg-[#FF8200] hover:bg-[#E67300] text-white font-bold rounded-lg transition text-center"

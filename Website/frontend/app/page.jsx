@@ -263,7 +263,7 @@ export default function HomePage() {
       {/* SECTION 5 - Les artistes */}
       <section className="bg-[#4F0F5A] text-white py-24 font-roboto scroll-animate opacity-0">
         <div className="container mx-auto px-6 md:px-12 flex flex-col items-center gap-12">
-        {/* --- left text (全体中央寄せ) --- */}
+        {/* --- left text */}
           <div className="w-full md:w-4/5 space-y-6 text-center md:text-left">
             <h2 className="text-4xl md:text-5xl font-bold text-center">🎶Les artistes</h2>
               <p className="italic text-lg text-gray-200 text-center">
@@ -333,7 +333,7 @@ export default function HomePage() {
             </p>
 
               <a
-                href="https://docs.google.com/forms/your-form-link" // ← Google Form link here
+                href="https://docs.google.com/forms/d/103kxFBL0xEYUb_YrmIypigL-HEvkz8DvHSP_czfN5rE/edit?pli=1" // ← Google Form link here
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block mt-4 px-6 py-3 bg-white text-[#FF8200] font-bold rounded-lg hover:bg-gray-100 transition animate-slideInUp delay-400"
@@ -385,7 +385,7 @@ export default function HomePage() {
                 {/* Buttons group */}
                 <div className="mt-6 flex flex-col md:flex-row md:space-x-4 space-y-3 md:space-y-0 justify-start animate-slideInUp delay-300">
                   <a
-                    href="/edition-2025"
+                    href="/festival"
                     className="inline-block px-5 py-3 bg-white text-[#4F0F5A] font-bold rounded-lg hover:bg-gray-100 transition"
                   >
                   Édition 2025
