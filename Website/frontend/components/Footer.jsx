@@ -24,13 +24,6 @@ export default function Footer() {
               <Image src="/images/instagram_logo.png" alt="Instagram" width={30} height={30} />
             </div>
           </Link>
-
-          <Link href="https://www.tiktok.com/@belfieldfestival" target="_blank" rel="noopener noreferrer">
-            <div className="bg-white rounded-full p-2 shadow-lg hover:scale-110 transition transform">
-              <Image src="/images/tiktok_logo.png" alt="TikTok" width={30} height={30} />
-            </div>
-          </Link>
-
           <Link href="mailto:belfield.festival@gmail.com" target="_blank" rel="noopener noreferrer">
             <div className="bg-white rounded-full p-2 shadow-lg hover:scale-110 transition transform">
               <Image src="/images/email_icon.png" alt="Email" width={30} height={30} />

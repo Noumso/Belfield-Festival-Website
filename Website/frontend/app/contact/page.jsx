@@ -1,8 +1,31 @@
 "use client";
 
 import { useState } from "react";
+import { useEffect } from "react";
 
 export default function ContactPage() {
+  useEffect(() => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("animate-slideInUp");
+              entry.target.classList.remove("opacity-0");
+            } else {
+              entry.target.classList.remove("animate-slideInUp");
+              entry.target.classList.add("opacity-0");
+            }
+          });
+        },
+        { threshold: 0.2 }
+      );
+  
+      const elements = document.querySelectorAll(".scroll-animate");
+      elements.forEach((el) => observer.observe(el));
+  
+      return () => observer.disconnect();
+    }, []);
+  
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -32,7 +55,7 @@ export default function ContactPage() {
         setStatus({ type: "success", message: "✅ Message envoyé avec succès !" });
         setFormData({ name: "", email: "", subject: "", message: "" });
       } else {
-        setStatus({ type: "error", message: `⚠️ ${data.error || "Erreur inconnue."}` });
+        setStatus({ type: "error", message: `⚠️ ${data.message || "Erreur inconnue."}` });
       }
     } catch (err) {
       console.error(err);
@@ -43,7 +66,7 @@ export default function ContactPage() {
   return (
     <section className="min-h-screen bg-gradient-to-b from-[#4F0F5A] to-[#2E0535] text-white py-20 px-6 flex flex-col items-center">
       {/* ===== HEADER ===== */}
-      <div className="max-w-4xl text-center mb-16">
+      <div className="max-w-4xl text-center mb-16 scroll-animate opacity-0">
         <h1 className="text-5xl md:text-6xl font-bold mb-4 text-[#FF8200]">
           Contact
         </h1>
@@ -55,7 +78,7 @@ export default function ContactPage() {
       {/* ===== CONTACT CONTENT ===== */}
       <div className="max-w-5xl w-full grid md:grid-cols-2 gap-12 mb-16">
         {/* ===== Coordonnées ===== */}
-        <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-10 border border-white/20 shadow-xl">
+        <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-10 border border-white/20 shadow-xl scroll-animate opacity-0">
           <h2 className="text-2xl font-semibold mb-6 text-[#FF8200]">
             Coordonnées
           </h2>
@@ -143,7 +166,7 @@ export default function ContactPage() {
         </div>
 
         {/* ===== FORMULAIRE ===== */}
-        <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-10 border border-white/20 shadow-xl">
+        <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-10 border border-white/20 shadow-xl scroll-animate opacity-0">
           <h2 className="text-2xl font-semibold mb-6 text-[#FF8200]">
             Envoyer un message
           </h2>

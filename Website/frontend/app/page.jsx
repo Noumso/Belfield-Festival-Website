@@ -170,7 +170,7 @@ export default function HomePage() {
         controls
         width="100%"
         >
-        <source src="/videos/aftermovie2024.mp4" type="video/mp4" />
+        <source src="/videos/after_movie_2024.mp4" type="video/mp4" />
         Votre navigateur ne supporte pas la lecture vidéo.
       </video>
       </div>
