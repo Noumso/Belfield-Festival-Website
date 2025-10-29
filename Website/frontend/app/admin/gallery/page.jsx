@@ -1,4 +1,6 @@
 'use client';
+export const dynamic = "force-dynamic";
+
 
 import { useEffect, useState } from "react";
 import { getToken } from "../../../utils/auth";
@@ -13,9 +15,9 @@ export default function GalleryAdminPage() {
     visible: true,
   });
   const [status, setStatus] = useState("");
-  const [token, setToken] = useState(null); // token を state にする
+  const [token, setToken] = useState(null); // roken state
 
-  // token をクライアント側で取得
+  
   useEffect(() => {
     const t = getToken();
     setToken(t);

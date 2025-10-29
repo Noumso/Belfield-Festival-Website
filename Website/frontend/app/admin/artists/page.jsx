@@ -1,4 +1,5 @@
 'use client';
+export const dynamic = "force-dynamic";
 
 import { useEffect, useState } from "react";
 import { getToken } from "../../../utils/auth";
@@ -22,7 +23,7 @@ export default function ArtistAdminPage() {
   }, []);
 
   const fetchArtists = async () => {
-    if (!token) return; // token がない場合は取得しない
+    if (!token) return; 
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/artists`, {
         headers: { Authorization: `Bearer ${token}` },

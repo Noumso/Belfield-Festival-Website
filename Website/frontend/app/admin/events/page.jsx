@@ -1,4 +1,6 @@
 'use client';
+export const dynamic = "force-dynamic";
+
 
 import { useState, useEffect } from "react";
 import { getToken } from "../../../utils/auth";
@@ -16,9 +18,8 @@ export default function EventAdminPage() {
     featured: false,
   });
   const [status, setStatus] = useState("");
-  const [token, setToken] = useState(null); // token を state にする
+  const [token, setToken] = useState(null); 
 
-  // token をクライアント側で取得
   useEffect(() => {
     const t = getToken();
     setToken(t);
