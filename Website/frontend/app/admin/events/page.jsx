@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { getToken } from "../../../../utils/auth";
+import { getToken } from "../../../utils/auth";
 
 export default function EventAdminPage() {
   const [events, setEvents] = useState([]);
