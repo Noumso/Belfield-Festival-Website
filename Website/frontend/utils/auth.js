@@ -1,7 +1,17 @@
-export const setToken = (token) => localStorage.setItem("adminToken", token);
-export function getToken() {
-  if (typeof window === 'undefined') return null; // server-side check
-  return localStorage.getItem('token');
-}
+// adminToken を統一して扱う
+export const setToken = (token) => {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem("adminToken", token);
+  }
+};
 
-export const removeToken = () => localStorage.removeItem("adminToken");
+export const getToken = () => {
+  if (typeof window === 'undefined') return null; // SSR 時は null
+  return localStorage.getItem("adminToken");
+};
+
+export const removeToken = () => {
+  if (typeof window !== 'undefined') {
+    localStorage.removeItem("adminToken");
+  }
+};
