@@ -1,4 +1,5 @@
-"use client";
+'use client';
+
 import { useEffect, useState } from "react";
 import { getToken } from "../../../utils/auth";
 
@@ -12,14 +13,25 @@ export default function GalleryAdminPage() {
     visible: true,
   });
   const [status, setStatus] = useState("");
-  const token = getToken();
+  const [token, setToken] = useState(null); // token を state にする
+
+  // token をクライアント側で取得
+  useEffect(() => {
+    const t = getToken();
+    setToken(t);
+  }, []);
 
   const fetchGalleries = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/gallery`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const data = await res.json();
-    setGalleries(data);
+    if (!token) return;
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/gallery`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      setGalleries(data);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {
@@ -33,6 +45,7 @@ export default function GalleryAdminPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!token) return;
     setStatus("Adding...");
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/gallery`, {
@@ -53,6 +66,7 @@ export default function GalleryAdminPage() {
   };
 
   const handleDelete = async (id) => {
+    if (!token) return;
     if (!confirm("Are you sure to delete?")) return;
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/gallery/${id}`, {
@@ -65,6 +79,8 @@ export default function GalleryAdminPage() {
       alert(err.message);
     }
   };
+
+  if (!token) return <div className="p-10">Loading...</div>;
 
   return (
     <div className="p-10">

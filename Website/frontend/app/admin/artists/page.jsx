@@ -1,4 +1,5 @@
-"use client";
+'use client';
+
 import { useEffect, useState } from "react";
 import { getToken } from "../../../utils/auth";
 
@@ -13,14 +14,24 @@ export default function ArtistAdminPage() {
     order: 0,
   });
   const [status, setStatus] = useState("");
-  const token = getToken();
+  const [token, setToken] = useState(null); // token state
+
+  useEffect(() => {
+    const t = getToken();
+    setToken(t);
+  }, []);
 
   const fetchArtists = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/artists`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const data = await res.json();
-    setArtists(data);
+    if (!token) return; // token がない場合は取得しない
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/artists`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      setArtists(data);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {
@@ -38,6 +49,7 @@ export default function ArtistAdminPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!token) return; // don't proceed without token
     setStatus("Adding...");
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/artists`, {
@@ -46,7 +58,14 @@ export default function ArtistAdminPage() {
         body: JSON.stringify(form),
       });
       if (!res.ok) throw new Error("Failed to add artist");
-      setForm({ name: "", style: "", bio: "", image: "", socials: { instagram: "", soundcloud: "", spotify: "", youtube: "" }, order: 0 });
+      setForm({
+        name: "",
+        style: "",
+        bio: "",
+        image: "",
+        socials: { instagram: "", soundcloud: "", spotify: "", youtube: "" },
+        order: 0,
+      });
       fetchArtists();
       setStatus("Added successfully!");
     } catch (err) {
@@ -55,6 +74,7 @@ export default function ArtistAdminPage() {
   };
 
   const handleDelete = async (id) => {
+    if (!token) return; // don't proceed without token
     if (!confirm("Are you sure to delete?")) return;
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/artists/${id}`, {
@@ -67,6 +87,9 @@ export default function ArtistAdminPage() {
       alert(err.message);
     }
   };
+
+  // token roading state
+  if (!token) return <div className="p-10">Loading...</div>;
 
   return (
     <div className="p-10">

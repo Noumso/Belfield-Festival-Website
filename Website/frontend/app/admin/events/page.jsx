@@ -1,4 +1,5 @@
-"use client";
+'use client';
+
 import { useState, useEffect } from "react";
 import { getToken } from "../../../utils/auth";
 
@@ -15,14 +16,25 @@ export default function EventAdminPage() {
     featured: false,
   });
   const [status, setStatus] = useState("");
-  const token = getToken();
+  const [token, setToken] = useState(null); // token を state にする
+
+  // token をクライアント側で取得
+  useEffect(() => {
+    const t = getToken();
+    setToken(t);
+  }, []);
 
   const fetchEvents = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/events`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const data = await res.json();
-    setEvents(data);
+    if (!token) return;
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/events`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      setEvents(data);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {
@@ -36,6 +48,7 @@ export default function EventAdminPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!token) return;
     setStatus("Adding...");
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/events`, {
@@ -44,7 +57,16 @@ export default function EventAdminPage() {
         body: JSON.stringify(form),
       });
       if (!res.ok) throw new Error("Failed to add event");
-      setForm({ title: "", description: "", date: "", startTime: "", endTime: "", location: "", stage: "", featured: false });
+      setForm({
+        title: "",
+        description: "",
+        date: "",
+        startTime: "",
+        endTime: "",
+        location: "",
+        stage: "",
+        featured: false,
+      });
       fetchEvents();
       setStatus("Added successfully!");
     } catch (err) {
@@ -53,6 +75,7 @@ export default function EventAdminPage() {
   };
 
   const handleDelete = async (id) => {
+    if (!token) return;
     if (!confirm("Are you sure to delete?")) return;
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/events/${id}`, {
@@ -65,6 +88,8 @@ export default function EventAdminPage() {
       alert(err.message);
     }
   };
+
+  if (!token) return <div className="p-10">Loading...</div>;
 
   return (
     <div className="p-10">
