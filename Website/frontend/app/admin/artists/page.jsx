@@ -1,7 +1,6 @@
 'use client';
 export const dynamic = "force-dynamic";
 
-
 import { useEffect, useState } from "react";
 import { getToken } from "../../../utils/auth";
 
@@ -17,29 +16,34 @@ export default function ArtistAdminPage() {
   });
   const [status, setStatus] = useState("");
   const [token, setToken] = useState(null); // token state
+  const [loading, setLoading] = useState(true);
 
+  // 1️⃣ Get token only on client side
   useEffect(() => {
     const t = getToken();
     setToken(t);
+    setLoading(false);
   }, []);
 
-  const fetchArtists = async () => {
-    if (!token) return; 
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/artists`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = await res.json();
-      setArtists(data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
+  // 2️⃣ Fetch artists data
   useEffect(() => {
-    if (token) fetchArtists();
+    if (!token) return;
+    const fetchArtists = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/artists`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!res.ok) throw new Error("Failed to fetch artists");
+        const data = await res.json();
+        setArtists(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchArtists();
   }, [token]);
 
+  // 3️⃣ Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name in form.socials) {
@@ -49,14 +53,18 @@ export default function ArtistAdminPage() {
     }
   };
 
+  // 4️⃣ Submit new artist
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!token) return; // don't proceed without token
+    if (!token) return;
     setStatus("Adding...");
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/artists`, {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(form),
       });
       if (!res.ok) throw new Error("Failed to add artist");
@@ -68,15 +76,21 @@ export default function ArtistAdminPage() {
         socials: { instagram: "", soundcloud: "", spotify: "", youtube: "" },
         order: 0,
       });
-      fetchArtists();
+      // Reload artists after adding
+      const updatedRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/artists`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const updatedData = await updatedRes.json();
+      setArtists(updatedData);
       setStatus("Added successfully!");
     } catch (err) {
       setStatus(err.message);
     }
   };
 
+  // 5️⃣ Delete artist
   const handleDelete = async (id) => {
-    if (!token) return; // don't proceed without token
+    if (!token) return;
     if (!confirm("Are you sure to delete?")) return;
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/artists/${id}`, {
@@ -84,14 +98,16 @@ export default function ArtistAdminPage() {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) throw new Error("Failed to delete");
-      fetchArtists();
+      // Remove deleted artist from list
+      setArtists(artists.filter(a => a._id !== id));
     } catch (err) {
       alert(err.message);
     }
   };
 
-  // token roading state
-  if (!token) return <div className="p-10">Loading...</div>;
+  // Show loading while fetching token
+  if (loading) return <div className="p-10">Loading...</div>;
+  if (!token) return <div className="p-10 text-red-600">You are not authorized.</div>;
 
   return (
     <div className="p-10">

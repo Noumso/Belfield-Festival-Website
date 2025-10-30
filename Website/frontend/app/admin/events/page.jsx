@@ -17,35 +17,41 @@ export default function EventAdminPage() {
     featured: false,
   });
   const [status, setStatus] = useState("");
-  const [token, setToken] = useState(null); 
+  const [token, setToken] = useState(null); // token state
+  const [loading, setLoading] = useState(true); // loading state for token
 
+  // 1️⃣ Get token only on client side
   useEffect(() => {
     const t = getToken();
     setToken(t);
+    setLoading(false);
   }, []);
 
-  const fetchEvents = async () => {
-    if (!token) return;
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/events`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = await res.json();
-      setEvents(data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
+  // 2️⃣ Fetch events data when token is available
   useEffect(() => {
-    if (token) fetchEvents();
+    if (!token) return;
+    const fetchEvents = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/events`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!res.ok) throw new Error("Failed to fetch events");
+        const data = await res.json();
+        setEvents(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchEvents();
   }, [token]);
 
+  // 3️⃣ Handle form input changes
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setForm({ ...form, [name]: type === "checkbox" ? checked : value });
   };
 
+  // 4️⃣ Submit new event
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!token) return;
@@ -67,13 +73,19 @@ export default function EventAdminPage() {
         stage: "",
         featured: false,
       });
-      fetchEvents();
+      // reload events
+      const updatedRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/events`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const updatedData = await updatedRes.json();
+      setEvents(updatedData);
       setStatus("Added successfully!");
     } catch (err) {
       setStatus(err.message);
     }
   };
 
+  // 5️⃣ Delete event
   const handleDelete = async (id) => {
     if (!token) return;
     if (!confirm("Are you sure to delete?")) return;
@@ -83,13 +95,15 @@ export default function EventAdminPage() {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) throw new Error("Failed to delete");
-      fetchEvents();
+      setEvents(events.filter(e => e._id !== id));
     } catch (err) {
       alert(err.message);
     }
   };
 
-  if (!token) return <div className="p-10">Loading...</div>;
+  // Show loading while fetching token
+  if (loading) return <div className="p-10">Loading...</div>;
+  if (!token) return <div className="p-10 text-red-600">You are not authorized.</div>;
 
   return (
     <div className="p-10">

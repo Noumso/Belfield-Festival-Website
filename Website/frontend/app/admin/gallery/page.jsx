@@ -1,7 +1,7 @@
 'use client';
 export const dynamic = "force-dynamic";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { getToken } from "../../../utils/auth";
 
 export default function GalleryAdminPage() {
@@ -14,36 +14,41 @@ export default function GalleryAdminPage() {
     visible: true,
   });
   const [status, setStatus] = useState("");
-  const [token, setToken] = useState(null); // roken state
+  const [token, setToken] = useState(null); // token state
+  const [loading, setLoading] = useState(true); // loading state for token
 
-  
+  // 1️⃣ Get token only on client side
   useEffect(() => {
     const t = getToken();
     setToken(t);
+    setLoading(false);
   }, []);
 
-  const fetchGalleries = async () => {
-    if (!token) return;
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/gallery`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = await res.json();
-      setGalleries(data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
+  // 2️⃣ Fetch gallery data when token is available
   useEffect(() => {
-    if (token) fetchGalleries();
+    if (!token) return;
+    const fetchGalleries = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/gallery`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!res.ok) throw new Error("Failed to fetch gallery data");
+        const data = await res.json();
+        setGalleries(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchGalleries();
   }, [token]);
 
+  // 3️⃣ Handle form input changes
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setForm({ ...form, [name]: type === "checkbox" ? checked : value });
   };
 
+  // 4️⃣ Submit new gallery item
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!token) return;
@@ -59,13 +64,19 @@ export default function GalleryAdminPage() {
       });
       if (!res.ok) throw new Error("Failed to add gallery");
       setForm({ title: "", caption: "", url: "", photographer: "", visible: true });
-      fetchGalleries();
+      // refresh gallery list
+      const updatedRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/gallery`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const updatedData = await updatedRes.json();
+      setGalleries(updatedData);
       setStatus("Added successfully!");
     } catch (err) {
       setStatus(err.message);
     }
   };
 
+  // 5️⃣ Delete gallery item
   const handleDelete = async (id) => {
     if (!token) return;
     if (!confirm("Are you sure to delete?")) return;
@@ -75,65 +86,29 @@ export default function GalleryAdminPage() {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) throw new Error("Failed to delete");
-      fetchGalleries();
+      setGalleries(galleries.filter(g => g._id !== id));
     } catch (err) {
       alert(err.message);
     }
   };
 
-  if (!token) return <div className="p-10">Loading...</div>;
+  // 6️⃣ Show loading while fetching token
+  if (loading) return <div className="p-10">Loading...</div>;
+  if (!token) return <div className="p-10 text-red-600">You are not authorized.</div>;
 
   return (
     <div className="p-10">
       <h1 className="text-3xl font-bold mb-6">Gallery Admin</h1>
 
       <form onSubmit={handleSubmit} className="mb-8 space-y-3">
-        <input
-          type="text"
-          name="title"
-          value={form.title}
-          onChange={handleChange}
-          placeholder="Title"
-          required
-          className="border p-2 rounded w-full"
-        />
-        <input
-          type="text"
-          name="caption"
-          value={form.caption}
-          onChange={handleChange}
-          placeholder="Caption"
-          className="border p-2 rounded w-full"
-        />
-        <input
-          type="text"
-          name="url"
-          value={form.url}
-          onChange={handleChange}
-          placeholder="Image URL"
-          required
-          className="border p-2 rounded w-full"
-        />
-        <input
-          type="text"
-          name="photographer"
-          value={form.photographer}
-          onChange={handleChange}
-          placeholder="Photographer"
-          className="border p-2 rounded w-full"
-        />
+        <input type="text" name="title" value={form.title} onChange={handleChange} placeholder="Title" required className="border p-2 rounded w-full"/>
+        <input type="text" name="caption" value={form.caption} onChange={handleChange} placeholder="Caption" className="border p-2 rounded w-full"/>
+        <input type="text" name="url" value={form.url} onChange={handleChange} placeholder="Image URL" required className="border p-2 rounded w-full"/>
+        <input type="text" name="photographer" value={form.photographer} onChange={handleChange} placeholder="Photographer" className="border p-2 rounded w-full"/>
         <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            name="visible"
-            checked={form.visible}
-            onChange={handleChange}
-          />
-          Visible
+          <input type="checkbox" name="visible" checked={form.visible} onChange={handleChange}/> Visible
         </label>
-        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
-          Add Gallery
-        </button>
+        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">Add Gallery</button>
         {status && <p>{status}</p>}
       </form>
 
@@ -144,18 +119,8 @@ export default function GalleryAdminPage() {
               <strong>{g.title}</strong> ({g.visible ? "Visible" : "Hidden"}) - {g.photographer}
             </div>
             <div className="flex gap-2">
-              <a
-                href={`/admin/gallery/${g._id}`}
-                className="bg-yellow-500 text-white px-3 py-1 rounded"
-              >
-                Edit
-              </a>
-              <button
-                onClick={() => handleDelete(g._id)}
-                className="bg-red-600 text-white px-3 py-1 rounded"
-              >
-                Delete
-              </button>
+              <a href={`/admin/gallery/${g._id}`} className="bg-yellow-500 text-white px-3 py-1 rounded">Edit</a>
+              <button onClick={() => handleDelete(g._id)} className="bg-red-600 text-white px-3 py-1 rounded">Delete</button>
             </div>
           </li>
         ))}
