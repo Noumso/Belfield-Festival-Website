@@ -21,6 +21,12 @@ const app = express();
 import bodyParser from "body-parser";
 
 // Use raw body for webhook route, JSON for others
+app.post("/api/tickets/webhook", bodyParser.raw({type: "*/*"})); // stripe webhook raw body
+app.use(cors({
+  origin: process.env.FRONTEND_URL || "http://localhost:3000"
+}));
+if (process.env.NODE_ENV !== "production") app.use(morgan("dev"));
+
 app.use((req, res, next) => {
   if (req.originalUrl === "/api/tickets/webhook") {
     next();
@@ -29,11 +35,6 @@ app.use((req, res, next) => {
   }
 });
 
-app.post("/api/tickets/webhook", bodyParser.raw({type: "*/*"})); // stripe webhook raw body
-app.use(cors({
-  origin: process.env.FRONTEND_URL || "http://localhost:3000"
-}));
-if (process.env.NODE_ENV !== "production") app.use(morgan("dev"));
 
 // Routes
 app.get("/", (req, res) => res.send("🎶 Belfield Festival API — ready"));
