@@ -18,7 +18,7 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen w-full bg-[#FFD9A6] relative flex flex-col items-center">
-      {/* ログアウトボタン（右上固定） */}
+      {/*logout button */}
       <button
         onClick={handleLogout}
         className="absolute top-6 right-6 bg-[#4F0F5A] text-white font-semibold px-6 py-3 rounded-xl
@@ -27,12 +27,12 @@ export default function AdminPage() {
         Logout
       </button>
 
-      {/* Dashboardタイトル */}
+      {/* Dashboard titre */}
       <h1 className="text-4xl font-bold text-[#4F0F5A] mt-10 text-center">
         Admin Dashboard
       </h1>
 
-      {/* ナビゲーションカード */}
+      {/* navi card */}
       <main className="w-full max-w-5xl mt-16 grid grid-cols-1 sm:grid-cols-3 gap-8 justify-items-center">
         <a
           href="/admin/artists"
