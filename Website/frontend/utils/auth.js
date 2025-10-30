@@ -1,4 +1,3 @@
-// adminToken を統一して扱う
 export const setToken = (token) => {
   if (typeof window !== 'undefined') {
     localStorage.setItem("adminToken", token);
@@ -6,7 +5,7 @@ export const setToken = (token) => {
 };
 
 export const getToken = () => {
-  if (typeof window === 'undefined') return null; // SSR 時は null
+  if (typeof window === 'undefined') return null; // SSR check
   return localStorage.getItem("adminToken");
 };
 
