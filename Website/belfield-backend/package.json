@@ -13,6 +13,7 @@
     "seed:all": "node seeds/seedAll.js"
   },
   "dependencies": {
+    "@stripe/stripe-js": "^8.1.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^2.2.0",
     "brew": "^0.0.8",

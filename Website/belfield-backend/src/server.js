@@ -17,28 +17,30 @@ connectDB();
 
 const app = express();
 
-// For Stripe webhooks we need the raw body; set up conditional middleware
-import bodyParser from "body-parser";
-
-// Use raw body for webhook route, JSON for others
-app.post("/api/tickets/webhook", bodyParser.raw({type: "*/*"})); // stripe webhook raw body
+// CORS configuration
 app.use(cors({
   origin: process.env.FRONTEND_URL || "http://localhost:3000"
 }));
-if (process.env.NODE_ENV !== "production") app.use(morgan("dev"));
 
+// Logging (development environment only)
+if (process.env.NODE_ENV !== "production") {
+  app.use(morgan("dev"));
+}
+
+// JSON body (for all routes, 5MB limit)
 app.use((req, res, next) => {
   if (req.originalUrl === "/api/tickets/webhook") {
-    next();
+    // Use raw body for Stripe webhook
+    express.raw({ type: "*/*" })(req, res, next);
   } else {
     express.json({ limit: "5mb" })(req, res, next);
   }
 });
 
-
-// Routes
+// Root route
 app.get("/", (req, res) => res.send("🎶 Belfield Festival API — ready"));
 
+// API routes
 app.use("/api/artists", artistRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/tickets", ticketRoutes);
@@ -47,7 +49,7 @@ app.use("/api/volunteers", volunteerRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/admin", adminRoutes);
 
-// Error middleware (last)
+// Error handler (last middleware)
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
