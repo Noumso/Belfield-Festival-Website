@@ -1,4 +1,4 @@
-# 🚀 ** MVP Development and Execution – Belfield Festival Website**
+# 🚀  MVP Development and Execution – Belfield Festival Website
 
 ## 1. Stage Objectives
 
@@ -17,7 +17,7 @@ Development tasks were divided between **frontend** and **backend** implementati
 ### 🧩 **Frontend Development (Next.js + TailwindCSS)**
 - Core pages implemented:
   - **Home** – General overview of the festival  
-  - **A propos** – Practical information (location, transport, etc.)  
+  - **A propos** – Practical information (Festival history,location, etc.)  
   - **Festival** – Schedule and artist lineup  
   - **Ticket** – Ticket purchase and payment integration  
   - **Admin Dashboard** – Admin-only access for content and data management
@@ -38,7 +38,7 @@ Currently, testing is done in a local development environment.
 | Endpoint | Method | Description |
 |-----------|---------|-------------|
 | `/api/artists` | GET / POST | Manage artist data (public fetch, admin creation) |
-| `/api/events` | GET | Retrieve event schedule |
+| `/api/events` | GET / POST | Manage event schedule |
 | `/api/tickets` | POST / GET | Create and list purchased tickets |
 | `/api/webhook` | POST | Stripe webhook for payment validation |
 | `/api/admin` | POST | Admin login and authentication |
