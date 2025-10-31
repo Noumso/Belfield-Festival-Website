@@ -54,7 +54,7 @@ Currently, testing is done in a local development environment.
 
 ### Collections (example)
 - **🎤artists**
-  ```json
+  ```bash
 
   {
    name: "D'RAM",
@@ -67,7 +67,7 @@ Currently, testing is done in a local development environment.
 
 - **🎪Events**
 
-```json
+```bash
 {
    title: "Soirée d'ouverture",
     description: "Concert d'ouverture avec DJ Belfield",
@@ -84,7 +84,7 @@ Currently, testing is done in a local development environment.
 
 | Category        | Tools / Frameworks                         | Purpose                          |
 |-----------------|-------------------------------------------|----------------------------------|
-| Frontend        | Next.js, React, TailwindCSS                | User interface and page rendering |
+| Frontend        | Next.js, TailwindCSS                | User interface and page rendering |
 | Backend         | Node.js, Express.js                         | REST API and server logic         |
 | Database        | MongoDB Atlas                               | Persistent data storage           |
 | Payments        | Stripe                                      | Online ticket payments            |
@@ -114,7 +114,7 @@ Currently, testing is done in a local development environment.
 ---
 ## 7. Testing & Quality Assurance
 
-- ✅ **API Testing:** All backend endpoints tested via Postman (GET, POST, PUT, DELETE)
+- ✅ **API Testing:** All backend endpoints tested via Postman　and cURL (GET, POST, PUT, DELETE)
 - ⚠️ **Manual Testing:** Ticket purchase flow (Stripe test mode) is under verification; event retrieval and admin login have been confirmed
 - ✅ **Unit Testing:** Basic tests implemented using Jest for backend routes
 - ✅ **Deployment Validation:** Render backend tested live with connected MongoDB Atlas 
@@ -139,7 +139,7 @@ Result
 {
   "_id": "69024a70e4943d0d9aa63bdc",
   "username": "admin",
-  "email": "admin@example.com",
+  "email": "admin@belfieldfest.com",
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MDI0YTcwZTQ5NDNkMGQ5YWE2M2JkYyIsImlhdCI6MTc2MTkxNDk1MiwiZXhwIjoxNzYyNTE5NzUyfQ.7iUnSFWSjB_USjJCYx49eXE8RUUjfY9fByayzEVG5Uk"
 }
 ```
