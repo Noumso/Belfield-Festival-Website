@@ -4,19 +4,33 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+// 🖼️ list of festival images
+const festivalImages = [
+  "/images/festival1.jpg",
+  "/images/festival2.jpg",
+  "/images/festival3.jpg",
+  "/images/festival4.jpg",
+  "/images/festival5.jpg",
+];
 
 export default function HomePage() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 }); 
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
+  // slider effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev === festivalImages.length - 1 ? 0 : prev + 1));
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
-  // countdown (pour 15 août 2026)
+  // countdown effect
   useEffect(() => {
     const targetDate = new Date("2026-08-15T00:00:00");
     const interval = setInterval(() => {
       const now = new Date();
       const diff = targetDate - now;
-
       if (diff <= 0) {
         clearInterval(interval);
         setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -32,7 +46,7 @@ export default function HomePage() {
     return () => clearInterval(interval);
   }, []);
 
-   // for Intersection Observer
+  // Intersection Observer
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -41,8 +55,8 @@ export default function HomePage() {
             entry.target.classList.add("animate-slideInUp");
             entry.target.classList.remove("opacity-0");
           } else {
-          entry.target.classList.remove("animate-slideInUp");
-          entry.target.classList.add("opacity-0");
+            entry.target.classList.remove("animate-slideInUp");
+            entry.target.classList.add("opacity-0");
           }
         });
       },
@@ -51,7 +65,6 @@ export default function HomePage() {
 
     const elements = document.querySelectorAll(".scroll-animate");
     elements.forEach((el) => observer.observe(el));
-
     return () => observer.disconnect();
   }, []);
 
@@ -63,62 +76,66 @@ export default function HomePage() {
     "LALUDE", "MARCEL DK B2B MILIORYANDO", "NAT3", "SEG"
   ];
 
-
   return (
     <div>
-    {/* ===== Section 1: Violet Background ===== */}
-      <section className="bg-[#4F0F5A] text-white py-20 font-roboto text-center scroll-animate opacity-0">
-        <h2 className="text-4xl md:text-5xl font-bold mb-4">BELFIELD FESTIVAL 2025</h2>
-        <p className="text-2xl md:text-3xl mb-6">15 & 16 AOÛT – PARC DE LA LÈRE, CAUSSADE</p>
+       {/* ===== Section 1: Hero avec slider ===== */}
+      <section className="relative w-full h-[100vh] flex flex-col items-center justify-center bg-black text-white overflow-hidden">
+        {/* 🖼️ Image slider */}
+         {festivalImages.map((src, index) => (
+          <Image
+              key={index}
+              src={src}
+              alt={`Festival ${index + 1}`}
+              fill
+              className={`object-cover transition-opacity duration-1000 ${
+                index === currentIndex ? "opacity-100" : "opacity-0"
+              }`}
+              priority={index === 0}
+          />
+        ))}
 
-        <p className="text-xl italic mb-8">
-          “Deux jours de musique, d’énergie et de liberté au cœur du Tarn-et-Garonne.”
-        </p>
+        {/* 🔳 Overlay */}
+          <div className="absolute inset-0 bg-black/50 z-10" />
 
-        {/* 🎬 Aftermovie placeholder */}
-        <div className="scroll-animate opacity-0 mb-12 flex justify-center">
-          <div className="w-full max-w-3xl h-[400px] bg-black/40 rounded-lg flex items-center justify-center text-gray-300 text-lg">
-            🎬 Aftermovie à venir
+        {/* 🎤 Title + Info + Countdown */}
+          <div className="relative z-20 text-center px-6">
+          <h1 className="text-5xl md:text-7xl font-extrabold mb-4 font-bbh">
+            BELFIELD FESTIVAL 2025
+          </h1>
+            <p className="text-2xl md:text-3xl mb-4">
+              15 & 16 AOÛT – PARC DE LA LÈRE, CAUSSADE
+            </p>
+            <p className="text-xl italic mb-8">
+            “Deux jours de musique, d’énergie et de liberté au cœur du Tarn-et-Garonne.”
+            </p>
+
+            {/* ⏳ Countdown */}
+            <div className="mt-10 mb-8">
+              <h3 className="text-2xl font-semibold mb-2">
+                ⏳ Jusqu'au prochain festival (15 et 16 août 2026)
+              </h3>
+              <div className="text-3xl font-bold tracking-wide">
+                {timeLeft.days}j {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
+              </div>
+            </div>
+
+            {/* 🎟 Buttons */}
+            <div className="flex flex-col md:flex-row justify-center items-center gap-6 mt-6">
+              <Link
+                href="/tickets"
+                className="bg-orange hover:bg-orange-500 text-white font-bold py-3 px-8 rounded-full shadow-lg transition"
+              >
+                🎟 Réservez vos places
+              </Link>
+              <Link
+                href="/volunteer"
+                className="bg-transparent border border-white hover:bg-white hover:text-[#4F0F5A] font-bold py-3 px-8 rounded-full transition"
+              >
+                🤝 Devenez bénévole
+              </Link>
+            </div>
           </div>
-        </div>
-
-        {/* Countdown */}
-        <div className="scroll-animate opacity-0 mb-12">
-          <h3 className="text-2xl font-semibold mb-3">⏳ Jusqu'au prochain festival (15 et 16 août 2026)</h3>
-          <div className="text-3xl font-bold tracking-wide">
-            {timeLeft.days}j {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
-          </div>
-        </div>
-
-        {/* Line-up */}
-        <div className="scroll-animate opacity-0 max-w-4xl mx-auto mb-10">
-          <h3 className="text-3xl font-bold mb-6">🎵 LINE-UP</h3>
-          <div className="flex flex-wrap justify-center gap-4 text-lg md:text-xl">
-            {lineup.map((artist, i) => (
-              <span key={i} className="bg-white/10 px-4 py-2 rounded-lg border border-white/20">
-                {artist}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Buttons */}
-        <div className="scroll-animate opacity-0 flex flex-col md:flex-row justify-center items-center gap-6 mt-10">
-          <Link
-            href="/tickets"
-            className="bg-orange hover:bg-orange-500 text-white font-bold py-3 px-8 rounded-full shadow-lg transition"
-          >
-            🎟 Réservez vos places
-          </Link>
-          <Link
-            href="/benevolat"
-            className="bg-transparent border border-white hover:bg-white hover:text-[#4F0F5A] font-bold py-3 px-8 rounded-full transition"
-          >
-            🤝 Devenez bénévole
-          </Link>
-        </div>
       </section>
-
       {/* SECTION 2 - L’expérience Belfield */}
      <section className="bg-[#FF8200] text-white py-16 font-roboto">
      <div className="max-w-6xl mx-auto px-6 md:px-10">
@@ -159,21 +176,6 @@ export default function HomePage() {
         />
       </div>
     </div>
-
-      {/* Aftermovie - video embed */}
-      <div className="scroll-animate opacity-0 text-center mt-16">
-        <h3 className="text-2xl md:text-3xl font-semibold mb-6">
-          🎬 Découvre l'Aftermovie 2024
-        </h3>
-        <video
-        className="rounded-xl shadow-lg mx-auto mt-6"
-        controls
-        width="100%"
-        >
-        <source src="/videos/after_movie_2024.mp4" type="video/mp4" />
-        Votre navigateur ne supporte pas la lecture vidéo.
-      </video>
-      </div>
       </div>
       </section>
       {/* SECTION 3 - Les temps forts de 2025 */}
