@@ -53,8 +53,9 @@ Currently, testing is done in a local development environment.
 ## 3. Database Design (MongoDB Atlas)
 
 ### Collections (example)
-- **artists**
+- **🎤artists**
   ```json
+
   {
    name: "D'RAM",
     style: "Electro",
@@ -64,7 +65,7 @@ Currently, testing is done in a local development environment.
     order: 1
   }
 
-### 🎪 Events
+- **🎪Events**
 
 ```json
 {
@@ -75,6 +76,7 @@ Currently, testing is done in a local development environment.
     stage: "Main Stage",
     featured: true
 }
+```
 
 ---
 
