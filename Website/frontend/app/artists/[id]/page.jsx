@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -12,7 +12,7 @@ export default function ArtistDetail() {
     if (!id) return;
     const fetchArtist = async () => {
       try {
-        const res = await fetch(`/api/artists/${id}`);
+        const res = await fetch(`http://localhost:5000/api/artists/${id}`);
         const data = await res.json();
         setArtist(data);
       } catch (err) {
@@ -21,26 +21,6 @@ export default function ArtistDetail() {
     };
     fetchArtist();
   }, [id]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate-slideInUp");
-            entry.target.classList.remove("opacity-0");
-          } else {
-            entry.target.classList.remove("animate-slideInUp");
-            entry.target.classList.add("opacity-0");
-          }
-        });
-      },
-      { threshold: 0.2 }
-    );
-    const elements = document.querySelectorAll(".scroll-animate");
-    elements.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
 
   if (!artist) {
     return (
@@ -53,9 +33,9 @@ export default function ArtistDetail() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#4F0F5A] to-[#FF8200] py-12">
       <div className="container mx-auto px-4 max-w-3xl">
-        <div className="bg-white rounded-xl overflow-hidden shadow-2xl scroll-animate opacity-0">
+        <div className="bg-white rounded-xl overflow-hidden shadow-2xl">
           <img
-            src={artist.image}
+            src={artist.image || '/images/placeholder.png'}
             alt={artist.name}
             className="w-full h-96 object-cover"
           />
@@ -67,14 +47,16 @@ export default function ArtistDetail() {
               {artist.style}
             </p>
             <p className="text-gray-800 text-lg mb-8">{artist.bio}</p>
-            <a
-              href={artist.socials.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block bg-[#4F0F5A] hover:bg-[#3a0b43] text-white px-6 py-3 rounded-full transition"
-            >
-              Suivre sur Instagram
-            </a>
+            {artist.socials?.instagram && (
+              <a
+                href={artist.socials.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-[#4F0F5A] hover:bg-[#3a0b43] text-white px-6 py-3 rounded-full transition"
+              >
+                Suivre sur Instagram
+              </a>
+            )}
           </div>
         </div>
       </div>

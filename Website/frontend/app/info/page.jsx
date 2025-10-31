@@ -257,7 +257,7 @@ export default function InfoPage() {
             </p>
 
             <a
-              href="/festival"
+              href="/events"
               className="inline-block px-6 py-3 bg-[#5A1F80] text-white font-bold rounded-lg hover:bg-[#290630] transition w-max"
             >
              🎟 Découvre le programme complet

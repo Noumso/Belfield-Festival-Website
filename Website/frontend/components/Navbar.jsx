@@ -49,6 +49,15 @@ export default function Navbar() {
                     <ul className="absolute left-0 mt-2 w-48 bg-white text-gray-900 rounded-lg shadow-lg overflow-hidden">
                       <li>
                         <Link
+                          href="/events"
+                          className="block px-4 py-2 hover:bg-yellow-400 hover:text-black transition"
+                          onClick={() => setIsFestivalOpen(false)}
+                        >
+                          Programme 📅
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
                           href="/festival"
                           className="block px-4 py-2 hover:bg-yellow-400 hover:text-black transition"
                           onClick={() => setIsFestivalOpen(false)}
