@@ -9,7 +9,7 @@ const items = [
   {
     title: "Soirée du vendredi",
     caption: "Ambiance incroyable 🎉",
-    url: "https://example.com/photo-friday.jpg"
+    url: "https://example.com/photo-friday.jpg",
   },
   {
     title: "Scène principale",

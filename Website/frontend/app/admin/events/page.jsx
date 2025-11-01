@@ -3,6 +3,7 @@ export const dynamic = "force-dynamic";
 
 import { useState, useEffect } from "react";
 import { getToken } from "../../../utils/auth";
+import Link from "next/link";
 
 export default function EventAdminPage() {
   const [events, setEvents] = useState([]);
@@ -106,11 +107,17 @@ export default function EventAdminPage() {
 
   return (
     <div className="min-h-screen bg-[#4F0F5A] flex flex-col items-center py-12 px-4 text-white">
-      <h1 className="text-4xl font-bold mb-8 text-[#FF8200] text-center">
-        Administration des Événements
-      </h1>
+      {/* 🔙 Back to Dashboard button */}
+      <div className="w-full flex justify-center mb-6">
+        <Link
+          href="/admin"
+          className="bg-[#FF8200] text-white px-6 py-2 rounded font-semibold hover:bg-[#e97500] transition shadow-md"
+        >
+          ← Retour au tableau de bord
+        </Link>
+      </div>
 
-      {/* フォームカード */}
+      {/* form card */}
       <form
         onSubmit={handleSubmit}
         className="bg-white text-gray-900 rounded-2xl shadow-lg p-8 w-full max-w-2xl space-y-4 mb-10"
@@ -184,6 +191,7 @@ export default function EventAdminPage() {
           />
           Mettre en avant
         </label>
+        <div className="flex justify-center">
         <button
           type="submit"
           className="bg-[#FF8200] text-white px-5 py-2 rounded hover:bg-[#e97500] transition font-semibold"
@@ -191,6 +199,7 @@ export default function EventAdminPage() {
           Ajouter
         </button>
         {status && <p className="text-center text-[#4F0F5A] font-medium">{status}</p>}
+        </div>
       </form>
 
       {/* events list */}

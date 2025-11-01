@@ -2,6 +2,7 @@
 export const dynamic = "force-dynamic";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { getToken } from "../../../utils/auth";
 
 export default function ArtistAdminPage() {
@@ -17,15 +18,16 @@ export default function ArtistAdminPage() {
   const [status, setStatus] = useState("");
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
-  // Récupération du token
+  // 🔐 Retrieve authentication token
   useEffect(() => {
     const t = getToken();
     setToken(t);
     setLoading(false);
   }, []);
 
-  // Récupération des artistes
+  // 📦 Fetch all artists from the API
   useEffect(() => {
     if (!token) return;
     const fetchArtists = async () => {
@@ -43,6 +45,7 @@ export default function ArtistAdminPage() {
     fetchArtists();
   }, [token]);
 
+  // ✏️ Handle input field changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name in form.socials) {
@@ -52,12 +55,12 @@ export default function ArtistAdminPage() {
     }
   };
 
+  // 🚀 Submit new artist
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!token) return;
     setStatus("Ajout en cours...");
     try {
-      // POST artiste
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/artists`, {
         method: "POST",
         headers: {
@@ -68,7 +71,7 @@ export default function ArtistAdminPage() {
       });
       if (!res.ok) throw new Error("Échec de l'ajout");
 
-      // Réinitialisation du formulaire
+      // Reset form after success
       setForm({
         name: "",
         style: "",
@@ -78,7 +81,7 @@ export default function ArtistAdminPage() {
         order: 0,
       });
 
-      // Rechargement des artistes
+      // Reload updated artist list
       const updatedRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/artists`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -90,6 +93,7 @@ export default function ArtistAdminPage() {
     }
   };
 
+  // 🗑️ Delete an artist
   const handleDelete = async (id) => {
     if (!token) return;
     if (!confirm("Êtes-vous sûr de vouloir supprimer cet artiste ?")) return;
@@ -105,12 +109,21 @@ export default function ArtistAdminPage() {
     }
   };
 
+  // ⏳ Loading and access control
   if (loading) return <div className="p-10 text-white text-center">Chargement...</div>;
   if (!token) return <div className="p-10 text-red-600 text-center">Non autorisé</div>;
 
   return (
     <div className="min-h-screen bg-[#4F0F5A] flex flex-col items-center py-10 px-4">
-      {/* Carte du formulaire */}
+      {/* 🧭 Back to Admin Dashboard button */}
+      <button
+        onClick={() => router.push("/admin")}
+        className="mb-6 bg-gray-200 text-[#4F0F5A] px-4 py-2 rounded hover:bg-gray-300 transition font-semibold"
+      >
+        ← Retour au tableau de bord
+      </button>
+
+      {/* 🎨 Artist Form Card */}
       <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-8 w-full max-w-md mb-8 text-black">
         <h1 className="text-3xl font-bold mb-6 text-center text-[#FF8200]">
           Ajouter un artiste
@@ -126,7 +139,7 @@ export default function ArtistAdminPage() {
             { name: "soundcloud", placeholder: "SoundCloud" },
             { name: "spotify", placeholder: "Spotify" },
             { name: "youtube", placeholder: "YouTube" },
-            { name: "order", placeholder: "Ordre", type: "number" }, // ← 追加
+            { name: "order", placeholder: "Ordre", type: "number" },
           ].map((field) => (
             <input
               key={field.name}
@@ -153,7 +166,7 @@ export default function ArtistAdminPage() {
         </form>
       </div>
 
-      {/* Liste des artistes */}
+      {/* 🧾 Artist List */}
       <div className="bg-white/90 backdrop-blur-sm text-gray-900 rounded-2xl shadow-lg p-6 w-full max-w-3xl">
         <h2 className="text-2xl font-semibold text-[#4F0F5A] mb-4 text-center">
           Liste des artistes

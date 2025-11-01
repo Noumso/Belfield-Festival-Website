@@ -29,7 +29,7 @@ export default function AdminPage() {
 
       {/* Dashboard titre */}
       <h1 className="text-4xl font-bold text-[#4F0F5A] mt-10 text-center">
-        Admin Dashboard
+        Admin tablau de bord
       </h1>
 
       {/* navi card */}

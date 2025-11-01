@@ -12,6 +12,7 @@ export default function Navbar() {
     { name: "À propos", path: "/info" },
     { name: "Festival", path: "/festival" },
     { name: "Artistes", path: "/artists" },
+    { name: "Galerie", path: "/gallery" },
     { name: "Contact", path: "/contact" },
     { name: "Bénévole", path: "/volunteer" },
     { name: "Billetterie", path: "/tickets" },

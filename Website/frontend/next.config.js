@@ -1,9 +1,14 @@
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   output: "standalone",
-  experimental: {
-    appDir: true,
+  images: {
+    domains: [
+      "example.com",
+      "www.dropbox.com",
+      "dl.dropboxusercontent.com",
+    ],
   },
 };
 
